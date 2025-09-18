@@ -1,0 +1,31 @@
+<nav class="fixed top-0 left-0 right-0 z-50 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-strong rounded-2xl px-6 py-4 animate-fade-in">
+            <div class="flex items-center justify-between">
+                <x-molecules.navbar.logo />
+                @php
+                    $menus = [
+                        ['name' => 'Home', 'url' => '/', 'active' => request()->is('/')],
+                        ['name' => 'Blog', 'url' => '/blog', 'active' => request()->is('blog')],
+                        ['name' => 'About', 'url' => '/about', 'active' => request()->is('about')],
+                        ['name' => 'Contact', 'url' => '/contact', 'active' => request()->is('contact')],
+                    ];
+                    $user = Auth::user();
+                @endphp
+                <x-molecules.navbar.menu :menus="$menus" />
+                <x-molecules.navbar.profile :user="$user" />
+
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden btn-glass w-10 h-10 rounded-xl flex items-center justify-center"
+                    onclick="toggleMobileMenu()">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <x-molecules.navbar.mobile-menu :menus="$menus" :user="$user" />
+</nav>

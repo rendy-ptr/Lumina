@@ -1,0 +1,69 @@
+/* Navigation */
+.nav-item {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0.75rem;
+}
+.nav-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--primary-gradient);
+    border-radius: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.nav-item:hover::before,
+.nav-item.active::before {
+    opacity: 1;
+}
+.nav-item span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--primary-gradient);
+    background-size: 200% 200%;
+    animation: gradient 4s ease infinite;
+    box-shadow: var(--shadow-glow);
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(102, 126, 234, 0.5);
+}
+.btn-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Cards */
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-dark);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9);
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
