@@ -1,2 +1,2 @@
-import './bootstrap';
-import './home'
+import './bootstrap.js';
+import './home.js'

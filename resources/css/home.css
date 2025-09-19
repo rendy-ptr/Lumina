@@ -51,12 +51,6 @@
     animation: gradient 3s ease infinite;
 }
 
-/* Loading Dots */
-.loading-dots::after {
-    content: "";
-    animation: loading 1.5s infinite;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
     .hero-gradient {
