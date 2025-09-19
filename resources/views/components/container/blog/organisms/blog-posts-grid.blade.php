@@ -61,21 +61,14 @@
                                 <button
                                     class="like-btn flex items-center space-x-1 text-white/50 hover:text-red-400 transition-colors"
                                     data-post-id="{{ $post->id ?? $loop->index }}" data-liked="false">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                    </svg>
+                                    <x-heroicon-o-heart class="w-5 h-5" />
                                     <span class="like-count text-sm">{{ $post->likes_count }}</span>
                                 </button>
 
                                 <button
                                     class="share-btn btn-glass px-3 py-2 rounded-xl text-white hover:text-purple-300 transition-colors"
                                     data-url="{{ url('/posts/' . $post->slug) }}">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z">
-                                        </path>
-                                    </svg>
+                                    <x-heroicon-o-share class="w-5 h-5" />
                                 </button>
                             </div>
                         </div>
