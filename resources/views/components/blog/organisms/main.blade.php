@@ -53,8 +53,8 @@
     @endphp
 
     <!-- Header Section -->
-    <x-container.blog.organisms.blog-hero />
+    <x-blog-hero />
 
     <!-- Blog Posts Grid -->
-    <x-container.blog.organisms.blog-posts-grid :posts="$posts" />
+    <x-blog-posts-grid :posts="$posts" />
 </main>

@@ -1,9 +1,9 @@
 <section class="py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <x-container.Home.molecules.featured-post-title />
+        <x-home-featured-post-title />
         <!-- Main Featured Post -->
-        <x-container.Home.molecules.featured-post-main />
+        <x-home-featured-post-main />
         <!-- Secondary Featured Posts -->
-        <x-container.Home.molecules.featured-post-secondary />
+        <x-home-featured-post-secondary />
     </div>
 </section>

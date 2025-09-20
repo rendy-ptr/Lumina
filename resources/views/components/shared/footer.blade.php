@@ -2,19 +2,19 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             <!-- Brand -->
-            <x-molecules.footer.footer-brand />
+            <x-footer-brand />
 
             <!-- Quick Links -->
-            <x-molecules.footer.footer-links />
+            <x-footer-links />
 
             <!-- Resources -->
-            <x-molecules.footer.footer-resources />
+            <x-footer-resources />
         </div>
 
         <!-- Newsletter Signup -->
-        <x-molecules.footer.footer-newsletter />
+        <x-footer-newsletter />
 
         <!-- Bottom Bar -->
-        <x-molecules.footer.footer-bar />
+        <x-footer-bar />
     </div>
 </footer>

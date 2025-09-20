@@ -12,7 +12,19 @@
 </head>
 
 <body class="min-h-screen pt-16">
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Navigation -->
+    <x-shared.navbar />
+
     {{ $slot }}
+
+    <!-- Footer -->
+    <x-shared.footer />
+
+    <!-- Scroll to Top Button -->
+    <x-shared.scroll-to-top />
 </body>
 
 </html>

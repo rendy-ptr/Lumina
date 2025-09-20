@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="glass-strong rounded-2xl px-6 py-4 animate-fade-in">
             <div class="flex items-center justify-between">
-                <x-molecules.navbar.logo />
+                <x-navbar-logo />
                 @php
                     $menus = [
                         ['name' => 'Home', 'url' => '/', 'active' => request()->is('/')],
@@ -12,8 +12,8 @@
                     ];
                     $user = Auth::user();
                 @endphp
-                <x-molecules.navbar.menu :menus="$menus" />
-                <x-molecules.navbar.profile :user="$user" />
+                <x-navbar-menu :menus="$menus" />
+                <x-navbar-profile :user="$user" />
 
                 <!-- Mobile Menu Button -->
                 <button class="lg:hidden btn-glass w-10 h-10 rounded-xl flex items-center justify-center"
@@ -27,5 +27,5 @@
         </div>
     </div>
 
-    <x-molecules.navbar.mobile-menu :menus="$menus" :user="$user" />
+    <x-navbar-mobile-menu :menus="$menus" :user="$user" />
 </nav>
