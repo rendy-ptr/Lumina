@@ -20,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Contact
+        Blade::component('components.contact.organisms.contact-main', 'contact-main');
+        Blade::component('components.contact.organisms.hero', 'contact-hero');
+        Blade::component('components.contact.organisms.author-cards-grid', 'contact-author-cards-grid');
+        Blade::component('components.contact.molecules.author-card', 'contact-author-card');
+
         // Home
         Blade::component('components.home.molecules.category-lists', 'home-category-lists');
         Blade::component('components.home.molecules.category-title', 'home-category-title');
