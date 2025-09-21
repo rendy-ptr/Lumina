@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="flex items-center justify-between">
-                            <a href="/blog/{{ $post->id }}"
+                            <a href="{{ route('blog.show', $post->id) }}"
                                 class="btn-primary px-4 py-2 rounded-xl text-white font-medium text-sm hover:shadow-lg transition-all">
                                 Read More
                             </a>
