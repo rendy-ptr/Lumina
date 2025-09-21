@@ -16,12 +16,8 @@
                 <x-navbar-profile :user="$user" />
 
                 <!-- Mobile Menu Button -->
-                <button class="lg:hidden btn-glass w-10 h-10 rounded-xl flex items-center justify-center"
-                    onclick="toggleMobileMenu()">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
+                <button id="menuToggle" class="lg:hidden btn-glass w-10 h-10 rounded-xl flex items-center justify-center">
+                    @svg('zondicon-menu', 'w-5 h-5')
                 </button>
             </div>
         </div>

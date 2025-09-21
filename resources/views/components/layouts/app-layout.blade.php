@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> {{ $title }} </title>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.ts'])
 </head>
 
 <body class="min-h-screen pt-16">

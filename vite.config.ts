@@ -5,11 +5,9 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
     plugins: [
         laravel({
-            input: ["resources/css/app.css", "resources/js/app.js"],
+            input: ["resources/css/app.css", "resources/js/app.ts"],
             refresh: {
                 paths: ["app/**", "resources/views/**", "routes/**"],
-                delay: 300,
-                events: ["*"],
             },
         }),
         tailwindcss(),
@@ -34,7 +32,6 @@ export default defineConfig({
                 "**/.git/**",
             ],
         },
-        timeout: 120000,
         headers: {
             "Access-Control-Allow-Origin": "*",
         },

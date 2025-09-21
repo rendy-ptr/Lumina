@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="flex items-center justify-between">
-                            <a href="#" {{-- sementara pakai #, bukan route() --}}
+                            <a href="/blog/{{ $post->id }}"
                                 class="btn-primary px-4 py-2 rounded-xl text-white font-medium text-sm hover:shadow-lg transition-all">
                                 Read More
                             </a>
@@ -67,7 +67,7 @@
 
                                 <button
                                     class="share-btn btn-glass px-3 py-2 rounded-xl text-white hover:text-purple-300 transition-colors"
-                                    data-url="{{ url('/posts/' . $post->slug) }}">
+                                    data-url="{{ url('/posts/' . $post->id) }}">
                                     <x-heroicon-o-share class="w-5 h-5" />
                                 </button>
                             </div>

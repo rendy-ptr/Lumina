@@ -3,10 +3,10 @@
         if (!isset($posts)) {
             $posts = collect([
                 (object) [
+                    'id' => 1,
                     'title' => 'Work-Life Balance: Strategies for Modern Professionals',
                     'excerpt' =>
                         'Discover practical strategies to maintain a healthy work-life balance in the digital age.',
-                    'slug' => 'work-life-balance-2024',
                     'thumbnail_url' => 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80',
                     'author' => (object) [
                         'name' => 'Lisa Park',
@@ -19,6 +19,7 @@
                     'reading_time' => 4,
                 ],
                 (object) [
+                    'id' => 2,
                     'title' => 'The Future of Artificial Intelligence in Business',
                     'excerpt' => 'How AI is transforming decision making, customer experience, and automation.',
                     'slug' => 'future-ai-business',
@@ -34,6 +35,7 @@
                     'reading_time' => 6,
                 ],
                 (object) [
+                    'id' => 3,
                     'title' => 'Startup Survival Guide: Scaling Your Business',
                     'excerpt' => 'Essential tips for scaling your startup sustainably and avoiding common pitfalls.',
                     'slug' => 'startup-survival-guide',
