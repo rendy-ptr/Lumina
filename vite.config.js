@@ -8,32 +8,58 @@ export default defineConfig({
             input: ["resources/css/app.css", "resources/js/app.js"],
             refresh: {
                 paths: ["app/**", "resources/views/**", "routes/**"],
-                delay: 100,
+                delay: 300,
                 events: ["*"],
             },
         }),
         tailwindcss(),
     ],
     server: {
+        host: "0.0.0.0",
+        port: 5173,
+        strictPort: false,
         hmr: {
             host: "localhost",
             protocol: "ws",
+            timeout: 60000,
+            overlay: false,
         },
         watch: {
-            usePolling: false,
+            usePolling: true,
+            interval: 1000,
+            ignored: [
+                "**/node_modules/**",
+                "**/storage/framework/views/**",
+                "**/vendor/**",
+                "**/.git/**",
+            ],
         },
-        // Optimasi server
-        strictPort: false,
-        port: 5173,
+        timeout: 120000,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+        },
     },
-    // Optimasi build
     build: {
         rollupOptions: {
             external: [],
+            output: {
+                manualChunks: undefined,
+            },
+        },
+        chunkSizeWarningLimit: 1000,
+        sourcemap: false,
+    },
+    optimizeDeps: {
+        include: ["alpinejs"],
+        exclude: ["@vite/client", "@vite/env"],
+        force: false,
+    },
+    resolve: {
+        alias: {
+            "@": "/resources/js",
         },
     },
-    // Optimasi caching
-    optimizeDeps: {
-        include: [],
+    define: {
+        global: "globalThis",
     },
 });
