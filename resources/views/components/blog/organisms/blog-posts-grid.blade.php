@@ -16,10 +16,12 @@
                     </div>
 
                     <div class="p-6">
-                        <h3
-                            class="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-purple-300 transition-colors">
-                            {{ $post->title }}
-                        </h3>
+                        <a href="{{ route('blog.show', $post->slug) }}" class="hover:cursor-pointer hover:underline">
+                            <h3
+                                class="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-purple-300 transition-colors">
+                                {{ $post->title }}
+                            </h3>
+                        </a>
 
                         <p class="text-white/70 text-sm mb-6 line-clamp-3">
                             {{ $post->excerpt }}
@@ -51,7 +53,7 @@
                         </div>
 
                         <div class="flex items-center justify-between">
-                            <a href="{{ route('blog.show', $post->id) }}"
+                            <a href="{{ route('blog.show', $post->slug) }}"
                                 class="btn-primary px-4 py-2 rounded-xl text-white font-medium text-sm hover:shadow-lg transition-all">
                                 Read More
                             </a>
@@ -67,7 +69,7 @@
 
                                 <button
                                     class="share-btn btn-glass px-3 py-2 rounded-xl text-white hover:text-purple-300 transition-colors"
-                                    data-url="{{ url('/posts/' . $post->id) }}">
+                                    data-url="{{ url('/posts/' . $post->slug) }}">
                                     <x-heroicon-o-share class="w-5 h-5" />
                                 </button>
                             </div>

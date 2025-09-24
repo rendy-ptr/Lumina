@@ -13,6 +13,7 @@
 @import "./animations/animations.css";
 
 @import "./home.css";
+@import "./dashboard.css";
 
 /* Tailwind directives */
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';

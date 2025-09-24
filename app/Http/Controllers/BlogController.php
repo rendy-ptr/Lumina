@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Data\MockBlogData;
 
 class BlogController extends Controller
@@ -13,19 +12,20 @@ class BlogController extends Controller
         return view('blog.index', compact('posts'));
     }
 
-    public function show($id)
+    public function show($slug)
     {
         $posts = MockBlogData::getPosts();
-        $post = $posts->firstWhere('id', $id);
+        $post = $posts->firstWhere('slug', $slug);
 
         if (!$post) {
             abort(404);
         }
 
         // Get related posts (excluding current post)
-        $relatedPosts = $posts->filter(function ($p) use ($id) {
-            return $p->id != $id;
-        })->take(3);
+        $relatedPosts = $posts
+            ->filter(fn($p) => $p->slug !== $slug)
+            ->take(3);
+
 
         $comments = MockBlogData::getComments();
         $popularPosts = MockBlogData::getPopularPosts();

@@ -11,6 +11,7 @@ class MockBlogData
         return collect([
             (object) [
                 'id' => 1,
+                'slug' => 'work-life-balance-strategies',
                 'title' => 'Work-Life Balance: Strategies for Modern Professionals',
                 'excerpt' => 'Discover practical strategies to maintain a healthy work-life balance in the digital age.',
                 'thumbnail_url' => 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80',
@@ -21,10 +22,12 @@ class MockBlogData
                 'category' => (object) ['name' => 'Lifestyle'],
                 'created_at' => Carbon::parse('2024-12-03'),
                 'likes_count' => 192,
-                'reading_time' => 4,
+                'views_count' => 4,
+                'comments_count' => 8,
             ],
             (object) [
                 'id' => 2,
+                'slug' => 'future-ai-business',
                 'title' => 'The Future of Artificial Intelligence in Business',
                 'excerpt' => 'How AI is transforming decision making, customer experience, and automation.',
                 'slug' => 'future-ai-business',
@@ -36,10 +39,12 @@ class MockBlogData
                 'category' => (object) ['name' => 'Technology'],
                 'created_at' => Carbon::parse('2024-11-25'),
                 'likes_count' => 305,
-                'reading_time' => 6,
+                'views_count' => 6,
+                'comments_count' => 5,
             ],
             (object) [
                 'id' => 3,
+                'slug' => 'startup-survival-guide',
                 'title' => 'Startup Survival Guide: Scaling Your Business',
                 'excerpt' => 'Essential tips for scaling your startup sustainably and avoiding common pitfalls.',
                 'slug' => 'startup-survival-guide',
@@ -51,7 +56,8 @@ class MockBlogData
                 'category' => (object) ['name' => 'Business'],
                 'created_at' => Carbon::parse('2024-11-15'),
                 'likes_count' => 128,
-                'reading_time' => 5,
+                'views_count' => 5,
+                'comments_count' => 3,
             ],
         ]);
     }
