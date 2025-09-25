@@ -29,11 +29,11 @@
 
                         <div class="flex items-center justify-between mb-6">
                             <div class="flex items-center space-x-3">
-                                <img src="{{ $post->author->avatar_url }}" alt="{{ $post->author->name }}"
+                                <img src="{{ $post->user->authorProfile->avatar_url }}" alt="{{ $post->user->name }}"
                                     class="w-10 h-10 rounded-full border-2 border-white/20">
                                 <div>
                                     <p class="text-white font-medium text-sm text-left">
-                                        {{ $post->author->name }}
+                                        {{ $post->user->name }}
                                     </p>
                                     <p class="text-white/50 text-xs text-left">
                                         {{ $post->created_at->format('F j, Y') }}
@@ -69,7 +69,7 @@
 
                                 <button
                                     class="share-btn btn-glass px-3 py-2 rounded-xl text-white hover:text-purple-300 transition-colors"
-                                    data-url="{{ url('/posts/' . $post->slug) }}">
+                                    data-url="{{ route('blog.show', $post->slug) }}">
                                     <x-heroicon-o-share class="w-5 h-5" />
                                 </button>
                             </div>

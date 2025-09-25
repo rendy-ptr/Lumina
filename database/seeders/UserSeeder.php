@@ -13,9 +13,10 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 5 users with visitor roles
-        User::factory()->count(5)->create();
-        // Create 5 users with author roles
-        User::factory()->count(5)->author()->create();
+        // Buat 10 user, masing-masing akan mendapatkan profile otomatis
+        User::factory(10)->create();
+        // Buat user dengan role author
+        User::factory()->author()->create();
+        User::factory(5)->author()->create();
     }
 }

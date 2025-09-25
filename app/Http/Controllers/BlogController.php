@@ -2,34 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\MockBlogData;
+use App\Models\Post;
 
 class BlogController extends Controller
 {
     public function index()
     {
-        $posts = MockBlogData::getPosts();
+        $posts = Post::with(['user.authorProfile', 'category'])
+            ->latest()
+            ->paginate(10);
+
         return view('blog.index', compact('posts'));
     }
 
     public function show($slug)
     {
-        $posts = MockBlogData::getPosts();
-        $post = $posts->firstWhere('slug', $slug);
+        $post = Post::with([
+            'user.authorProfile',
+            'user.visitorProfile',
+            'category',
+            'comments.user'
+        ])
+            ->where('slug', $slug)
+            ->firstOrFail();
 
-        if (!$post) {
-            abort(404);
-        }
+        $relatedPosts = Post::where('category_id', $post->category_id)
+            ->where('id', '!=', $post->id)
+            ->latest()
+            ->take(3)
+            ->get();
 
-        // Get related posts (excluding current post)
-        $relatedPosts = $posts
-            ->filter(fn($p) => $p->slug !== $slug)
-            ->take(3);
-
-
-        $comments = MockBlogData::getComments();
-        $popularPosts = MockBlogData::getPopularPosts();
-
-        return view('blog.detail', compact('post', 'relatedPosts', 'comments', 'popularPosts'));
+        return view('blog.detail', compact('post', 'relatedPosts'));
     }
 }

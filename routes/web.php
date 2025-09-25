@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Admin\DashboardController;
 
 Route::view('/', 'pages.home')->name('home');
@@ -11,6 +12,8 @@ Route::view('/contact', 'pages.contact')->name('contact');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+Route::post('/blog/{slug}/comments', [CommentController::class, 'store'])->name('comments.store');
+
 
 
 Route::prefix('admin')->name('admin.')->group(function () {

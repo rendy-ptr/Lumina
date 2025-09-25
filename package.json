@@ -9,7 +9,9 @@
         "migrate": "php artisan migrate:fresh",
         "seed:all": "php artisan db:seed",
         "seed:user": "php artisan db:seed --class=UserSeeder",
-        "seed:category": "php artisan db:seed --class=CategorySeeder"
+        "seed:category": "php artisan db:seed --class=CategorySeeder",
+        "seed:post": "php artisan db:seed --class=PostSeeder",
+        "seed:profile": "php artisan db:seed --class=ProfileSeeder"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
