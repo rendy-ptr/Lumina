@@ -37,21 +37,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.contact.organisms.author-cards-grid', 'contact-author-cards-grid');
         Blade::component('components.contact.molecules.author-card', 'contact-author-card');
 
-        // Home
-        Blade::component('components.home.molecules.category-lists', 'home-category-lists');
-        Blade::component('components.home.molecules.category-title', 'home-category-title');
-        Blade::component('components.home.molecules.featured-post-main', 'home-featured-post-main');
-        Blade::component('components.home.molecules.featured-post-secondary', 'home-featured-post-secondary');
-        Blade::component('components.home.molecules.featured-post-title', 'home-featured-post-title');
-        Blade::component('components.home.molecules.hero-badge', 'home-hero-badge');
-        Blade::component('components.home.molecules.hero-button', 'home-hero-button');
-        Blade::component('components.home.molecules.hero-paragraph', 'home-hero-paragraph');
-        Blade::component('components.home.molecules.hero-title', 'home-hero-title');
-        Blade::component('components.home.organisms.category', 'home-category');
-        Blade::component('components.home.organisms.featured-post', 'home-featured-post');
-        Blade::component('components.home.organisms.hero', 'home-hero');
-        Blade::component('components.home.organisms.home-main', 'home-main');
-
         // Blog - Index
         Blade::component('components.blog-index.molecules.blog-filter', 'blog-filter');
         Blade::component('components.blog-index.molecules.blog-search', 'blog-search');
@@ -74,12 +59,5 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.navbar.mobile-menu', 'navbar-mobile-menu');
         Blade::component('components.navbar.nav-item', 'navbar-item');
         Blade::component('components.navbar.profile', 'navbar-profile');
-
-        // About
-        Blade::component('components.about.organisms.main', 'about-main');
-        Blade::component('components.about.organisms.hero', 'about-hero');
-        Blade::component('components.about.organisms.author-cards-grid', 'about-author-cards-grid');
-        Blade::component('components.about.molecules.author-card', 'about-author-card');
-        Blade::component('components.about.molecules.author-title', 'about-author-title');
     }
 }

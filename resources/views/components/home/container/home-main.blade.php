@@ -1,10 +1,10 @@
 <main class="relative z-10 pb-16 py-20">
     <!-- Hero Section -->
-    <x-home-hero />
+    <x-home.organisms.hero />
 
     <!-- Featured Posts Section -->
-    <x-home-featured-post />
+    <x-home.organisms.featured-post />
 
     <!-- Categories Section -->
-    <x-home-category />
+    <x-home.organisms.category />
 </main>
