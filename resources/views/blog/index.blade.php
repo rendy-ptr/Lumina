@@ -2,7 +2,7 @@
 
 
     <!-- Main Content -->
-    <x-blog-index-main :posts="$posts" />
+    <x-blog-index.container.main :posts="$posts" />
 
 
 
