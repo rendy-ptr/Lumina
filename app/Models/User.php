@@ -20,9 +20,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
-    public function posts()
+    public function blogs()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Blog::class);
     }
     public function visitorProfile()
     {

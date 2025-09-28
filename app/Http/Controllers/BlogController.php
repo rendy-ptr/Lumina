@@ -2,22 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\Blog;
+use Illuminate\Http\Request;
+use App\Models\Category;
+
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with(['user.authorProfile', 'category'])
-            ->latest()
-            ->paginate(10);
+        $query = Blog::with(['user.authorProfile', 'category'])->latest();
 
-        return view('blog.index', compact('posts'));
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('category')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('slug', $request->category);
+            });
+        }
+
+        return view('blog.index', [
+            'blogs' => $query->paginate(9)->withQueryString(),
+        ]);
     }
+
 
     public function show($slug)
     {
-        $post = Post::with([
+        $query = Blog::with([
             'user.authorProfile',
             'user.visitorProfile',
             'category',
@@ -26,12 +40,15 @@ class BlogController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $relatedPosts = Post::where('category_id', $post->category_id)
-            ->where('id', '!=', $post->id)
+        $relatedBlogs = Blog::where('category_id', $query->category_id)
+            ->where('id', '!=', $query->id)
             ->latest()
             ->take(3)
             ->get();
 
-        return view('blog.detail', compact('post', 'relatedPosts'));
+        return view('blog.detail', [
+            'blog' => $query,
+            'relatedBlogs' => $relatedBlogs
+        ]);
     }
 }

@@ -2,8 +2,7 @@
 
 
     <!-- Main Content -->
-    <x-blog-index.container.main :posts="$posts" />
-
+    <x-blog-index.container.main :blogs="$blogs" />
 
 
 </x-layouts.app-layout>

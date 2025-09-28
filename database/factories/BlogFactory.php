@@ -8,9 +8,9 @@ use App\Models\User;
 use App\Models\Category;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Blog>
  */
-class PostFactory extends Factory
+class BlogFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,14 +19,16 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $author = User::where('role', 'author')->inRandomOrder()->first();
-        $category = Category::inRandomOrder()->first();
+        $author = User::where('role', 'author')->inRandomOrder()->first()
+            ?? User::factory()->author()->create();
+        $category = Category::inRandomOrder()->first()
+            ?? Category::factory()->create();
 
         $title = fake()->sentence(6);
 
         return [
-            'user_id' => $author ? $author->id : User::factory()->author(),
-            'category_id' => $category ? $category->id : null,
+            'user_id' => $author->id,
+            'category_id' => $category->id,
             'slug' => Str::slug($title) . '-' . Str::random(5),
             'title' => $title,
             'excerpt' => fake()->paragraph(2),

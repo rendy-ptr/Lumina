@@ -6,14 +6,14 @@
 
             <div class="flex flex-col lg:flex-row gap-8">
                 <!-- Article Header -->
-                <x-blog-detail.organisms.article :post="$post" />
+                <x-blog-detail.organisms.article :blog="$blog" />
 
                 <!-- Sidebar - 1/3 width -->
-                <x-blog-detail.organisms.sidebar :post="$post" />
+                <x-blog-detail.organisms.sidebar :blog="$blog" />
             </div>
 
             <!-- Related Posts (Full Width) -->
-            <x-blog-detail.organisms.related-posts :relatedPosts="$relatedPosts" />
+            <x-blog-detail.organisms.related-blogs :relatedBlogs="$relatedBlogs" />
         </div>
     </section>
 </main>

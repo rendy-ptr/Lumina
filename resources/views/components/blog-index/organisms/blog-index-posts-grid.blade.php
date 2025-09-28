@@ -1,42 +1,42 @@
 <section class="pb-20">
     <div class="max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @forelse ($posts as $post)
+            @forelse ($blogs as $blog)
                 <article class="card overflow-hidden group">
                     <div class="relative overflow-hidden">
-                        <img src="{{ $post->thumbnail_url }}" alt="{{ $post->title }}"
+                        <img src="{{ $blog->thumbnail_url }}" alt="{{ $blog->title }}"
                             class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105">
 
                         <div class="absolute top-4 left-4">
                             <span
                                 class="px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/80 to-pink-500/80 backdrop-blur-md text-white text-xs font-semibold">
-                                {{ $post->category->name }}
+                                {{ $blog->category->name }}
                             </span>
                         </div>
                     </div>
 
                     <div class="p-6">
-                        <a href="{{ route('blog.show', $post->slug) }}" class="hover:cursor-pointer hover:underline">
+                        <a href="{{ route('blog.show', $blog->slug) }}" class="hover:cursor-pointer hover:underline">
                             <h3
                                 class="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-purple-300 transition-colors">
-                                {{ $post->title }}
+                                {{ $blog->title }}
                             </h3>
                         </a>
 
                         <p class="text-white/70 text-sm mb-6 line-clamp-3">
-                            {{ $post->excerpt }}
+                            {{ $blog->excerpt }}
                         </p>
 
                         <div class="flex items-center justify-between mb-6">
                             <div class="flex items-center space-x-3">
-                                <img src="{{ $post->user->authorProfile->avatar_url }}" alt="{{ $post->user->name }}"
+                                <img src="{{ $blog->user->authorProfile->avatar_url }}" alt="{{ $blog->user->name }}"
                                     class="w-10 h-10 rounded-full border-2 border-white/20">
                                 <div>
                                     <p class="text-white font-medium text-sm text-left">
-                                        {{ $post->user->name }}
+                                        {{ $blog->user->name }}
                                     </p>
                                     <p class="text-white/50 text-xs text-left">
-                                        {{ $post->created_at->format('F j, Y') }}
+                                        {{ $blog->created_at->format('F j, Y') }}
                                     </p>
                                 </div>
                             </div>
@@ -47,13 +47,13 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                                 <span class="text-white/50 text-xs">
-                                    {{ $post->created_at->diffForHumans() }}
+                                    {{ $blog->created_at->diffForHumans() }}
                                 </span>
                             </div>
                         </div>
 
                         <div class="flex items-center justify-between">
-                            <a href="{{ route('blog.show', $post->slug) }}"
+                            <a href="{{ route('blog.show', $blog->slug) }}"
                                 class="btn-primary px-4 py-2 rounded-xl text-white font-medium text-sm hover:shadow-lg transition-all">
                                 Read More
                             </a>
@@ -62,14 +62,14 @@
                                 <!-- Like Feature -->
                                 <button
                                     class="like-btn flex items-center space-x-1 text-white/50 hover:text-red-400 transition-colors"
-                                    data-post-id="{{ $post->id ?? $loop->index }}" data-liked="false">
+                                    data-post-id="{{ $blog->id ?? $loop->index }}" data-liked="false">
                                     <x-heroicon-o-heart class="w-5 h-5" />
-                                    <span class="like-count text-sm">{{ $post->likes_count }}</span>
+                                    <span class="like-count text-sm">{{ $blog->likes_count }}</span>
                                 </button>
 
                                 <button
                                     class="share-btn btn-glass px-3 py-2 rounded-xl text-white hover:text-purple-300 transition-colors"
-                                    data-url="{{ route('blog.show', $post->slug) }}">
+                                    data-url="{{ route('blog.show', $blog->slug) }}">
                                     <x-heroicon-o-share class="w-5 h-5" />
                                 </button>
                             </div>

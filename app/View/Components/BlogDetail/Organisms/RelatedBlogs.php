@@ -6,22 +6,23 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Sidebar extends Component
+class RelatedBlogs extends Component
 {
-    public $blog;
+    public $relatedBlogs;
     /**
      * Create a new component instance.
      */
-    public function __construct($blog)
+    public function __construct($relatedBlogs)
     {
-        $this->blog = $blog;
+        $this->relatedBlogs = $relatedBlogs;
     }
+
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components.blog-detail.organisms.blog-detail-sidebar');
+        return view('components.blog-detail.organisms.blog-detail-related-posts');
     }
 }

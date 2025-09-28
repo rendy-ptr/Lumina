@@ -8,13 +8,13 @@ use Illuminate\View\Component;
 
 class AuthorProfile extends Component
 {
-    public $post;
+    public $blog;
     /**
      * Create a new component instance.
      */
-    public function __construct($post)
+    public function __construct($blog)
     {
-        $this->post = $post;
+        $this->blog = $blog;
     }
 
     /**

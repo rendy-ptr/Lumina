@@ -13,8 +13,8 @@ class Category extends Model
         "slug",
     ];
 
-    public function posts()
+    public function blogs()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Blog::class);
     }
 }

@@ -1,3 +1,4 @@
-import './bootstrap.ts';
-import './mobile-menu.ts'
-import './scroll-to-top.ts'
+import './bootstrap';
+import './mobile-menu'
+import './scroll-to-top'
+import './button-dropdown'

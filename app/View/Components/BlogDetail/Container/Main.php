@@ -8,15 +8,15 @@ use Illuminate\View\Component;
 
 class Main extends Component
 {
-    public $post;
-    public $relatedPosts;
+    public $blog;
+    public $relatedBlogs;
     /**
      * Create a new component instance.
      */
-    public function __construct($post, $relatedPosts)
+    public function __construct($blog, $relatedBlogs)
     {
-        $this->post = $post;
-        $this->relatedPosts = $relatedPosts;
+        $this->blog = $blog;
+        $this->relatedBlogs = $relatedBlogs;
     }
 
     /**

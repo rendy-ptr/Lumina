@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
-use App\Models\Post;
+use App\Models\Blog;
 
 
 /**
@@ -19,10 +19,10 @@ class CommentFactory extends Factory
      */
     public function definition(): array
     {
-        $post = Post::inRandomOrder()->first();
+        $post = Blog::inRandomOrder()->first();
         $comment = User::inRandomOrder()->first();
         return [
-            'post_id' => $post ? $post->id : Post::factory(),
+            'blog_id' => $post ? $post->id : Blog::factory(),
             'user_id' => $comment ? $comment->id : User::factory(),
             'content' => fake()->sentences(3, true),
             'likes_count' => fake()->numberBetween(0, 100),

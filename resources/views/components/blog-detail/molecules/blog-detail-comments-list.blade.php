@@ -1,5 +1,5 @@
 <div class="space-y-4 mb-6 max-h-80 overflow-y-auto pr-2">
-    @forelse ($post->comments as $comment)
+    @forelse ($blog->comments as $comment)
         <div class="flex space-x-3">
             <img src="{{ $comment->user->role === 'author'
                 ? $comment->user->authorProfile?->avatar_url
