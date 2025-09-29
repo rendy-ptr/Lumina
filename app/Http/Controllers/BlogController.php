@@ -40,10 +40,9 @@ class BlogController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $relatedBlogs = Blog::where('category_id', $query->category_id)
+        $relatedBlogs = Blog::where('user_id', $query->user_id)
             ->where('id', '!=', $query->id)
             ->latest()
-            ->take(3)
             ->get();
 
         return view('blog.detail', [

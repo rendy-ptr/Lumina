@@ -1,6 +1,5 @@
 <div class="border-t border-white/10 pt-4">
     <h4 class="text-sm font-semibold text-white mb-3">Leave a Comment</h4>
-    {{-- Ganti form statis dengan form yang bisa mengirim data --}}
     <form action="{{ route('comments.store', $blog->slug) }}" method="POST" class="space-y-3">
         @csrf
         <input type="hidden" name="blog_id" value="{{ $blog->id }}">

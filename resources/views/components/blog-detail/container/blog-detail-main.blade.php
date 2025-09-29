@@ -13,7 +13,7 @@
             </div>
 
             <!-- Related Posts (Full Width) -->
-            <x-blog-detail.organisms.related-blogs " />
+            <x-blog-detail.organisms.related-blogs />
         </div>
     </section>
 </main>
