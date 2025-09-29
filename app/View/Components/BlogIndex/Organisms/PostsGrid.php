@@ -8,13 +8,12 @@ use Illuminate\View\Component;
 
 class PostsGrid extends Component
 {
-    public $blogs;
     /**
      * Create a new component instance.
      */
-    public function __construct($blogs)
+    public function __construct()
     {
-        $this->blogs = $blogs;
+       //
     }
 
     /**

@@ -24,6 +24,8 @@ class Main extends Component
      */
     public function render(): View|Closure|string
     {
+        view()->share('blog', $this->blog);
+        view()->share('relatedBlogs', $this->relatedBlogs);
         return view('components.blog-detail.container.blog-detail-main');
     }
 }

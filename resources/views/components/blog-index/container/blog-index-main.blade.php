@@ -4,8 +4,8 @@
     <x-blog-index.organisms.hero  />
 
     <!-- Blog Posts Grid -->
-    <x-blog-index.organisms.posts-grid :blogs="$blogs" />
+    <x-blog-index.organisms.posts-grid  />
 
-    <x-blog-index.organisms.pagination :blogs="$blogs" />
+    <x-blog-index.organisms.pagination />
 
 </main>
