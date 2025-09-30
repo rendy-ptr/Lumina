@@ -13,6 +13,8 @@ Route::view('/contact', 'pages.contact')->name('contact');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{slug}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/blog/author/{user}', [BlogController::class, 'byAuthor'])->name('blog.byAuthor');
+
 
 
 

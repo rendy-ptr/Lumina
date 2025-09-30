@@ -20,6 +20,7 @@ class Blog extends Model
         'comments_count',
     ];
 
+
     public function user()
     {
         return $this->belongsTo(User::class);

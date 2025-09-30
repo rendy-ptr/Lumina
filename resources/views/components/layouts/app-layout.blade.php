@@ -25,6 +25,8 @@
 
     <!-- Scroll to Top Button -->
     <x-shared.scroll-to-top />
+
+
 </body>
 
 </html>

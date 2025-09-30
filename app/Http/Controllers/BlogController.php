@@ -40,14 +40,32 @@ class BlogController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $relatedBlogs = Blog::where('user_id', $query->user_id)
+        $relatedBlogs = Blog::with(['user.authorProfile', 'category'])
+            ->where('user_id', $query->user_id)
             ->where('id', '!=', $query->id)
             ->latest()
             ->get();
 
+
+
         return view('blog.detail', [
             'blog' => $query,
             'relatedBlogs' => $relatedBlogs
+        ]);
+    }
+
+    public function byAuthor($userId)
+    {
+        $blogs = Blog::with(['user.authorProfile', 'category'])
+            ->whereHas('user', function ($q) {
+                $q->where('role', 'author');
+            })
+            ->where('user_id', $userId)
+            ->latest()
+            ->paginate(9);
+
+        return view('blog.blog-by-author', [
+            'blogs' => $blogs,
         ]);
     }
 }

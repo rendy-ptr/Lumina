@@ -1,0 +1,165 @@
+<main class="relative z-10 pb-16 py-20">
+
+    <!-- Header Section -->
+    <section class="pt-20">
+        <div class="max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h1
+                    class="text-3xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
+                    @if ($blogs->isNotEmpty())
+                        {{ $blogs->first()->user->name }}
+                    @endif
+                    <span class="text-gradient">Articles</span>
+                </h1>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Blog Posts Grid -->
+    <section class="pb-20">
+        <div class="max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @forelse ($blogs as $blog)
+                    <article class="card overflow-hidden group">
+                        <div class="relative overflow-hidden">
+                            <img src="{{ $blog->thumbnail_url }}" alt="{{ $blog->title }}"
+                                class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105">
+
+                            <div class="absolute top-4 left-4">
+                                <span
+                                    class="px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/80 to-pink-500/80 backdrop-blur-md text-white text-xs font-semibold">
+                                    {{ $blog->category->name }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="p-6">
+                            <a href="{{ route('blog.show', $blog->slug) }}"
+                                class="hover:cursor-pointer hover:underline">
+                                <h3
+                                    class="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-purple-300 transition-colors">
+                                    {{ $blog->title }}
+                                </h3>
+                            </a>
+
+                            <p class="text-white/70 text-sm mb-6 line-clamp-3">
+                                {{ $blog->excerpt }}
+                            </p>
+
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center space-x-3">
+                                    <img src="{{ $blog->user->authorProfile->avatar_url }}"
+                                        alt="{{ $blog->user->name }}"
+                                        class="w-10 h-10 rounded-full border-2 border-white/20">
+                                    <div>
+                                        <p class="text-white font-medium text-sm text-left">
+                                            {{ $blog->user->name }}
+                                        </p>
+                                        <p class="text-white/50 text-xs text-left">
+                                            {{ $blog->created_at->format('F j, Y') }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-1 text-white/50 text-xs">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span class="text-white/50 text-xs">
+                                        {{ $blog->created_at->diffForHumans() }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <a href="{{ route('blog.show', $blog->slug) }}"
+                                    class="btn-primary px-4 py-2 rounded-xl text-white font-medium text-sm hover:shadow-lg transition-all">
+                                    Read More
+                                </a>
+
+                                <div class="flex items-center space-x-2">
+                                    <!-- Like Feature -->
+                                    <button
+                                        class="like-btn flex items-center space-x-1 text-white/50 hover:text-red-400 transition-colors"
+                                        data-post-id="{{ $blog->id ?? $loop->index }}" data-liked="false">
+                                        <x-heroicon-o-heart class="w-5 h-5" />
+                                        <span class="like-count text-sm">{{ $blog->likes_count }}</span>
+                                    </button>
+
+                                    <button
+                                        class="share-btn btn-glass px-3 py-2 rounded-xl text-white hover:text-purple-300 transition-colors"
+                                        data-url="{{ route('blog.show', $blog->slug) }}">
+                                        <x-heroicon-o-share class="w-5 h-5" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                @empty
+                    <p class="text-center text-white/60">Belum ada artikel.</p>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    {{-- PAGINATION --}}
+    @if ($blogs->hasPages())
+        <div class="flex flex-col items-center mt-12 space-y-4 animate-[fadeIn_0.6s_ease]">
+
+            {{-- Pagination --}}
+            <div class="flex items-center space-x-2">
+                {{-- Tombol Previous --}}
+                @if ($blogs->onFirstPage())
+                    <span
+                        class="px-4 py-2 rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] text-gray-400 cursor-not-allowed">
+                        ‹
+                    </span>
+                @else
+                    <a href="{{ $blogs->previousPageUrl() }}"
+                        class="px-4 py-2 rounded-xl btn-glass hover:btn-primary transition-all duration-300">
+                        ‹
+                    </a>
+                @endif
+
+                {{-- Nomor Halaman --}}
+                @foreach ($blogs->links()->elements[0] as $page => $url)
+                    @if ($page == $blogs->currentPage())
+                        <span
+                            class="px-4 py-2 rounded-xl gradient-active font-semibold shadow-md animate-[scaleIn_0.3s_ease]">
+                            {{ $page }}
+                        </span>
+                    @else
+                        <a href="{{ $url }}"
+                            class="px-4 py-2 rounded-xl btn-glass gradient-hover transition-all duration-300">
+                            {{ $page }}
+                        </a>
+                    @endif
+                @endforeach
+
+                {{-- Tombol Next --}}
+                @if ($blogs->hasMorePages())
+                    <a href="{{ $blogs->nextPageUrl() }}"
+                        class="px-4 py-2 rounded-xl btn-glass hover:btn-primary transition-all duration-300">
+                        ›
+                    </a>
+                @else
+                    <span
+                        class="px-4 py-2 rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] text-gray-400 cursor-not-allowed">
+                        ›
+                    </span>
+                @endif
+            </div>
+
+            {{-- Keterangan Pagination --}}
+            <div class="text-sm text-gray-400">
+                Menampilkan <span class="text-white font-semibold">{{ $blogs->firstItem() }}</span>
+                sampai <span class="text-white font-semibold">{{ $blogs->lastItem() }}</span>
+                dari <span class="text-white font-semibold">{{ $blogs->total() }}</span> artikel
+            </div>
+
+        </div>
+    @endif
+
+</main>
