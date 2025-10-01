@@ -3,7 +3,7 @@
         <div class="glass-strong rounded-2xl px-6 py-4 animate-fade-in">
             <div class="flex items-center justify-between">
                 <x-navbar.molecules.logo />
-                <x-navbar.organisms.menu :menus="$menus" />
+                <x-navbar.organisms.menu />
                 <x-navbar.molecules.profile />
 
                 <!-- Mobile Menu Button -->
@@ -14,5 +14,5 @@
         </div>
     </div>
 
-    <x-navbar.organisms.mobile-menu :menus="$menus" />
+    <x-navbar.organisms.mobile-menu />
 </nav>

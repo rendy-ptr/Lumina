@@ -8,13 +8,12 @@ use Illuminate\View\Component;
 
 class Menu extends Component
 {
-    public $menus;
     /**
      * Create a new component instance.
      */
-    public function __construct($menus)
+    public function __construct()
     {
-        $this->menus = $menus;
+        //
     }
 
     /**

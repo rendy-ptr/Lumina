@@ -5,7 +5,8 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "clear": "php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan optimize:clear && php artisan config:cache &&php artisan route:cache && php artisan view:cache && composer dump-autoload && php artisan optimize",
+        "clear": "php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan optimize:clear && php artisan config:cache &&php artisan route:cache && php artisan view:cache",
+        "optimize": "composer dump-autoload && php artisan optimize",
         "migrate": "php artisan migrate:fresh",
         "seed:all": "php artisan db:seed",
         "seed:user": "php artisan db:seed --class=UserSeeder",

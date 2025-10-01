@@ -21,6 +21,8 @@ class Profile extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.navbar.molecules.navbar-profile');
+        return view('components.navbar.molecules.navbar-profile', [
+            'user' => auth()->user(),
+        ]);
     }
 }
