@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
@@ -49,20 +50,17 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', Password::defaults(), 'confirmed'],
+            'role' => ['required', Rule::in(['visitor', 'author'])],
         ]);
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role' => 'visitor',
+            'role' => $validated['role'],
         ]);
 
-        Auth::login($user);
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('home'));
+        return redirect()->route('login')->with('status', __('Registration successful. Please sign in.'));
     }
 
     public function logout(Request $request): RedirectResponse
@@ -75,3 +73,5 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 }
+
+

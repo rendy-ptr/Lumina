@@ -33,6 +33,11 @@
                     <div class="glass-strong rounded-3xl p-8 border border-white/10 shadow-2xl">
                         <h2 class="text-2xl font-semibold text-white mb-6">Login to your account</h2>
 
+                        @if (session('status'))
+                            <div class="mb-6 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-4 text-sm text-emerald-200">
+                                {{ session('status') }}
+                            </div>
+                        @endif
                         @if ($errors->any())
                             <div
                                 class="mb-6 rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">
@@ -87,3 +92,4 @@
         </section>
     </main>
 </x-layouts.app-layout>
+

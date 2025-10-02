@@ -1,13 +1,5 @@
 <div id="mobileMenu"
     class="lg:hidden fixed inset-x-4 top-24 mobile-menu rounded-2xl p-6 transform -translate-y-4 opacity-0 invisible transition-all duration-300">
-    @php
-        $user = auth()->user();
-        $avatar = $user?->profile_photo_url
-            ?? $user?->visitorProfile?->avatar_url
-            ?? $user?->authorProfile?->avatar_url
-            ?? 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
-    @endphp
-
     <div class="space-y-4">
         @foreach ($menus as $menu)
             <a href="{{ $menu['url'] }}"
@@ -24,6 +16,23 @@
                     <div class="font-medium text-white">{{ $user->name ?? 'Guest User' }}</div>
                     <div class="text-sm text-gray-400">{{ $user->email ?? 'guest@example.com' }}</div>
                 </div>
+            </div>
+            <div class="space-y-3 px-4 mb-4">
+                @if ($user->role === 'visitor')
+                    <a href="#"
+                        class="block w-full btn-glass py-3 rounded-xl text-sm font-medium text-center text-gray-200 border border-white/10 hover:bg-white/10 transition">
+                        Manage Account
+                    </a>
+                @elseif ($user->role === 'author')
+                    <a href="{{ route('author.dashboard') }}"
+                        class="block w-full btn-primary py-3 rounded-xl text-sm font-semibold text-center text-white hover:shadow-lg transition">
+                        Dashboard
+                    </a>
+                    <a href="{{ route('author.profile.edit') }}"
+                        class="block w-full btn-glass py-3 rounded-xl text-sm font-medium text-center text-gray-200 border border-white/10 hover:bg-white/10 transition">
+                        Profile Settings
+                    </a>
+                @endif
             </div>
             <form method="POST" action="{{ route('logout') }}" class="px-4">
                 @csrf

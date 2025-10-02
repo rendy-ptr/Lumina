@@ -1,15 +1,3 @@
-@props(['user' => null])
-
-@php
-    $user = $user ?? auth()->user();
-    $avatar = $user?->profile_photo_url
-        ?? $user?->visitorProfile?->avatar_url
-        ?? $user?->authorProfile?->avatar_url
-        ?? 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
-    $displayName = $user->name ?? 'Guest';
-    $email = $user->email ?? 'guest@example.com';
-@endphp
-
 <div class="hidden lg:flex items-center space-x-4">
     @if ($user)
         <div class="relative group">
@@ -34,17 +22,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="py-2">
-                    <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group/item">
-                        <x-heroicon-o-user class="w-5 h-5 text-gray-400 group-hover/item:text-white" />
-                        <span class="text-sm text-gray-300 group-hover/item:text-white">Profile</span>
-                    </a>
-                    <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group/item">
-                        <x-bi-gear class="w-5 h-5 text-gray-400 group-hover/item:text-white" />
-                        <span class="text-sm text-gray-300 group-hover/item:text-white">Settings</span>
-                    </a>
+                <div class="py-2 space-y-1">
+                    @if ($user->role === 'visitor')
+                        <a href="#"
+                            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group/item">
+                            <x-heroicon-o-cog-6-tooth class="w-5 h-5 text-gray-400 group-hover/item:text-white" />
+                            <span class="text-sm text-gray-300 group-hover/item:text-white">Manage Account</span>
+                        </a>
+                    @elseif ($user->role === 'author')
+                        <a href="{{ route('author.dashboard') }}"
+                            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group/item">
+                            <x-heroicon-o-squares-2x2 class="w-5 h-5 text-gray-400 group-hover/item:text-white" />
+                            <span class="text-sm text-gray-300 group-hover/item:text-white">Dashboard</span>
+                        </a>
+                        <a href="{{ route('author.profile.edit') }}"
+                            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group/item">
+                            <x-heroicon-o-user-circle class="w-5 h-5 text-gray-400 group-hover/item:text-white" />
+                            <span class="text-sm text-gray-300 group-hover/item:text-white">Profile Settings</span>
+                        </a>
+                    @endif
                     <hr class="my-2 border-white/10">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

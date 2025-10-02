@@ -35,23 +35,23 @@ class User extends Authenticatable
         return $this->hasOne(AuthorProfile::class);
     }
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::created(function ($user) {
-            if ($user->role === 'visitor') {
-                $user->visitorProfile()->create([
-                    'avatar_url' => 'https://ui-avatars.com/api/?name=' . urlencode($user->name)
-                ]);
-            } elseif ($user->role === 'author') {
-                $user->authorProfile()->create([
-                    'avatar_url' => 'https://ui-avatars.com/api/?name=' . urlencode($user->name),
-                    'linkedin_url' => 'https://linkedin.com/in/' . fake()->userName(),
-                    'bio' => fake()->paragraph(3),
-                    'follower' => 0,
-                ]);
-            }
-        });
-    }
+    //     static::created(function ($user) {
+    //         if ($user->role === 'visitor') {
+    //             $user->visitorProfile()->create([
+    //                 'avatar_url' => 'https://ui-avatars.com/api/?name=' . urlencode($user->name)
+    //             ]);
+    //         } elseif ($user->role === 'author') {
+    //             $user->authorProfile()->create([
+    //                 'avatar_url' => 'https://ui-avatars.com/api/?name=' . urlencode($user->name),
+    //                 'linkedin_url' => 'https://linkedin.com/in/' . fake()->userName(),
+    //                 'bio' => fake()->paragraph(3),
+    //                 'follower' => 0,
+    //             ]);
+    //         }
+    //     });
+    // }
 }
