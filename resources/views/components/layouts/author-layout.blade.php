@@ -5,7 +5,7 @@
     $avatar = $user?->profile_photo_url
         ?? $user?->visitorProfile?->avatar_url
         ?? $user?->authorProfile?->avatar_url
-        ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name ?? 'Author') . '&background=7F9CF5&color=EBF4FF&size=128';
+        ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name);
 @endphp
 
 <!DOCTYPE html>

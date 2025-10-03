@@ -64,9 +64,17 @@
                                     <a href="#" class="text-xs text-gray-400 hover:text-white transition">Forgot
                                         password?</a>
                                 </div>
-                                <input type="password" name="password" id="password" required
-                                    autocomplete="current-password"
-                                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" />
+                                <div class="relative">
+                                    <input type="password" name="password" id="password" required
+                                        autocomplete="current-password"
+                                        class="w-full px-4 py-3 pr-12 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" />
+                                    <button type="button"
+                                        class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white transition"
+                                        data-password-toggle="password" aria-label="Toggle password visibility">
+                                        <x-heroicon-o-eye class="w-5 h-5" data-icon="show" />
+                                        <x-heroicon-o-eye-slash class="w-5 h-5 hidden" data-icon="hide" />
+                                    </button>
+                                </div>
                             </div>
 
                             <label class="flex items-center gap-3 text-sm text-gray-300">

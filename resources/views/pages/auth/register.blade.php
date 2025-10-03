@@ -77,26 +77,46 @@
                                 <div class="space-y-2">
                                     <label for="password"
                                         class="block text-left text-sm font-medium text-gray-300">Password</label>
-                                    <input type="password" name="password" id="password" required
-                                        autocomplete="new-password"
-                                        class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" />
+                                    <div class="relative">
+                                        <input type="password" name="password" id="password" required
+                                            autocomplete="new-password"
+                                            class="w-full px-4 py-3 pr-12 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" />
+                                        <button type="button"
+                                            class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white transition"
+                                            data-password-toggle="password" aria-label="Toggle password visibility">
+                                            <x-heroicon-o-eye class="w-5 h-5" data-icon="show" />
+                                            <x-heroicon-o-eye-slash class="w-5 h-5 hidden" data-icon="hide" />
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="space-y-2">
                                     <label for="password_confirmation"
                                         class="block text-left text-sm font-medium text-gray-300">Confirm
                                         password</label>
-                                    <input type="password" name="password_confirmation" id="password_confirmation"
-                                        required autocomplete="new-password"
-                                        class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" />
+                                    <div class="relative">
+                                        <input type="password" name="password_confirmation" id="password_confirmation"
+                                            required autocomplete="new-password"
+                                            class="w-full px-4 py-3 pr-12 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" />
+                                        <button type="button"
+                                            class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white transition"
+                                            data-password-toggle="password_confirmation" aria-label="Toggle password confirmation visibility">
+                                            <x-heroicon-o-eye class="w-5 h-5" data-icon="show" />
+                                            <x-heroicon-o-eye-slash class="w-5 h-5 hidden" data-icon="hide" />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
-                            <p class="text-xs text-gray-400 leading-relaxed">
-                                By creating an account, you agree to our <a href="#"
-                                    class="text-gradient font-semibold">Terms of
-                                    Service</a> and <a href="#" class="text-gradient font-semibold">Privacy
-                                    Policy</a>.
-                            </p>
+                            <label for="terms" class="flex items-start gap-3 text-xs text-gray-400 leading-relaxed">
+                                <input type="checkbox" id="terms" name="terms" value="1"
+                                    class="mt-1 w-4 h-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500"
+                                    @checked(old('terms')) required>
+                                <span>
+                                    By creating an account, you agree to our <a href="#"
+                                        class="text-gradient font-semibold">Terms of Service</a> and <a href="#"
+                                        class="text-gradient font-semibold">Privacy Policy</a>.
+                                </span>
+                            </label>
 
                             <button type="submit"
                                 class="btn-primary w-full py-3 rounded-2xl font-semibold text-white text-base flex items-center justify-center gap-2">

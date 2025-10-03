@@ -51,6 +51,7 @@ class AuthController extends Controller
             'email' => ['required', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', Password::defaults(), 'confirmed'],
             'role' => ['required', Rule::in(['visitor', 'author'])],
+            'terms' => ['accepted'],
         ]);
 
         $user = User::create([
@@ -73,5 +74,4 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 }
-
 
