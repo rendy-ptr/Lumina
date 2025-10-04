@@ -2,7 +2,7 @@
 
 
     <!-- Main Content -->
-    <x-blog-index.container.main :blogs="$blogs" />
+    <x-blog-index.container.blog-index-main :blogs="$blogs" :categories="$categories" />
 
 
 </x-layouts.app-layout>

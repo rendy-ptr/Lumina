@@ -11,7 +11,6 @@ class VisitorProfile extends Model
 
     protected $fillable = [
         'user_id',
-        'avatar_url',
     ];
 
     public function user()

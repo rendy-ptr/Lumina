@@ -70,17 +70,10 @@ class ProfileController extends Controller
         if (! $profile) {
             $profile = $user->authorProfile()->create([
                 'avatar_url' => $user->profile_photo_url
-                    ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name),
-                'bio' => '',
-                'linkedin_url' => '',
-                'follower' => 0,
+                    ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name)
             ]);
         }
 
         return $profile;
     }
 }
-
-
-
-

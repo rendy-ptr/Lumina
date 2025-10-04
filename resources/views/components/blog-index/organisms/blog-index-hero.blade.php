@@ -14,8 +14,8 @@
 
         <!-- Filter/Search Bar -->
         <div class="flex flex-col md:flex-row gap-4 justify-between items-center mb-12">
-            <x-blog-index.molecules.filter />
-            <x-blog-index.molecules.search />
+            <x-blog-index.molecules.blog-index-filter :categories="$categories" />
+            <x-blog-index.molecules.blog-index-search />
         </div>
     </div>
 </section>

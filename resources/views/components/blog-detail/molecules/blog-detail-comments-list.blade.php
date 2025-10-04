@@ -2,8 +2,8 @@
     @forelse ($blog->comments as $comment)
         <div class="flex space-x-3">
             <img src="{{ $comment->user->role === 'author'
-                ? $comment->user->authorProfile?->avatar_url
-                : $comment->user->visitorProfile?->avatar_url }}"
+                ? $comment->user->avatar_url
+                : $comment->user->avatar_url }}"
                 alt="{{ $comment->user->name }}" class="w-10 h-10 rounded-full border-2 border-white/20 flex-shrink-0">
             <div class="flex-1 min-w-0">
                 <div class="bg-white/5 rounded-lg p-3">

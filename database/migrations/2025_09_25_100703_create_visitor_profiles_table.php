@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('visitor_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('avatar_url');
             $table->timestamps();
         });
     }

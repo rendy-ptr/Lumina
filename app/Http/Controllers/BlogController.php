@@ -12,6 +12,7 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         $query = Blog::with(['user.authorProfile', 'category'])->latest();
+        $categories = Category::all();
 
         if ($request->filled('search')) {
             $query->where('title', 'like', '%' . $request->search . '%');
@@ -25,6 +26,7 @@ class BlogController extends Controller
 
         return view('blog.index', [
             'blogs' => $query->paginate(9)->withQueryString(),
+            'categories' => $categories
         ]);
     }
 

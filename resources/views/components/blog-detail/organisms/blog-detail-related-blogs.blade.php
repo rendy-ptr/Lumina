@@ -22,7 +22,7 @@
                     </a>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <img src="{{ $relatedBlog->user->authorProfile->avatar_url }}"
+                            <img src="{{ $relatedBlog->user->avatar_url }}"
                                 alt="{{ $relatedBlog->user->name }}"
                                 class="w-10 h-10 rounded-full border-2 border-white/20">
                             <div>

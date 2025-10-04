@@ -1,4 +1,4 @@
-@props(['name', 'role', 'bio', 'image', 'articles' => 0, 'joined' => '2024', 'quote' => null])
+@props(['name', 'role', 'bio', 'image', 'articles', 'joined', 'quote'])
 
 <div class="card p-6 group hover:shadow-xl transition-shadow duration-500 flex flex-col h-full">
     <div class="text-center">

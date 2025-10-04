@@ -9,11 +9,15 @@ class AuthorProfile extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
-        'avatar_url',
-        'linkedin_url',
         'bio',
-        'follower',
+        'job_title',
+        'quote',
+        'linkedin_url',
+        'twitter_url',
+        'facebook_url',
+        'instagram_url',
+        'website_url',
+        'email',
     ];
     public function user()
     {

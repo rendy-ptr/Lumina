@@ -2,8 +2,9 @@
     @if ($user)
         <div class="relative group">
             <button type="button" class="flex items-center space-x-3 btn-glass px-4 py-2 rounded-xl">
-                <img src="{{ $avatar }}" alt="{{ $displayName }}" class="w-8 h-8 rounded-lg ring-2 ring-white/20">
-                <span class="text-sm font-medium text-gray-300">{{ $displayName }}</span>
+                <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
+                    class="w-8 h-8 rounded-lg ring-2 ring-white/20">
+                <span class="text-sm font-medium text-gray-300">{{ $user->name }}</span>
                 <svg class="w-4 h-4 text-gray-400 group-hover:rotate-180 transition-transform" fill="none"
                     stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
@@ -15,10 +16,10 @@
                 class="absolute right-0 top-full mt-2 w-64 glass-strong rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                 <div class="p-4 border-b border-white/10">
                     <div class="flex items-center space-x-3">
-                        <img src="{{ $avatar }}" alt="{{ $displayName }}" class="w-12 h-12 rounded-lg">
+                        <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-12 h-12 rounded-lg">
                         <div>
-                            <h4 class="font-semibold text-white">{{ $displayName }}</h4>
-                            <p class="text-sm text-gray-400">{{ $email }}</p>
+                            <h4 class="font-semibold text-white">{{ $user->name }}</h4>
+                            <p class="text-sm text-gray-400">{{ $user->email }}</p>
                         </div>
                     </div>
                 </div>

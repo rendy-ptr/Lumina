@@ -11,10 +11,10 @@
 
         @if ($user)
             <div class="flex items-center space-x-3 py-3 px-4">
-                <img src="{{ $avatar }}" alt="{{ $user->name ?? 'Profile' }}" class="w-9 h-9 rounded-lg">
+                <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-9 h-9 rounded-lg">
                 <div>
-                    <div class="font-medium text-white">{{ $user->name ?? 'Guest User' }}</div>
-                    <div class="text-sm text-gray-400">{{ $user->email ?? 'guest@example.com' }}</div>
+                    <div class="font-medium text-white">{{ $user->name }}</div>
+                    <div class="text-sm text-gray-400">{{ $user->email }}</div>
                 </div>
             </div>
             <div class="space-y-3 px-4 mb-4">

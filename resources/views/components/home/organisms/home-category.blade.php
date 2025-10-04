@@ -9,6 +9,6 @@
             </p>
         </div>
 
-        <x-home.molecules.category-lists />
+        <x-home.molecules.home-category-lists />
     </div>
 </section>

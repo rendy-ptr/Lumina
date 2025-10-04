@@ -15,10 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
-            $table->string('avatar_url');
-            $table->string('linkedin_url');
             $table->text('bio');
-            $table->integer('follower');
+            $table->string('job_title');
+            $table->string('quote')->nullable();
+            $table->string('linkedin_url')->nullable();
+            $table->string('twitter_url')->nullable();
+            $table->string('facebook_url')->nullable();
+            $table->string('instagram_url')->nullable();
+            $table->string('website_url')->nullable();
+            $table->string('email')->unique();
+            $table->integer('follower')->default(0);
             $table->timestamps();
         });
     }

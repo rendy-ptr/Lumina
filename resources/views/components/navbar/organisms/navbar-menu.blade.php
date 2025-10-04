@@ -1,7 +1,7 @@
 <div class="hidden lg:flex items-center space-x-2">
     @foreach ($menus as $menu)
-        <x-navbar.molecules.item :href="$menu['url']" :active="$menu['active']">
+        <x-navbar.molecules.navbar-item :href="$menu['url']" :active="$menu['active']">
             {{ $menu['name'] }}
-        </x-navbar.molecules.item>
+        </x-navbar.molecules.navbar-item>
     @endforeach
 </div>

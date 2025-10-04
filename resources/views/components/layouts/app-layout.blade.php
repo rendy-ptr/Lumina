@@ -16,12 +16,12 @@
     <div class="animated-bg"></div>
 
     <!-- Navigation -->
-    <x-navbar.shared.main />
+    <x-shared.navbar />
 
     {{ $slot }}
 
     <!-- Footer -->
-    <x-footer.shared.main />
+    <x-shared.footer />
 
     <!-- Scroll to Top Button -->
     <x-shared.scroll-to-top />

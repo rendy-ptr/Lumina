@@ -5,10 +5,10 @@
              <img src="{{ $blog->thumbnail_url }}" alt="{{ $blog->title }}" class="w-full h-80 object-cover">
 
              <!-- Category Badge -->
-             <x-blog-detail.molecules.category-badge  />
+             <x-blog-detail.molecules.blog-detail-category-badge :blog="$blog" />
          </div>
 
          <!-- Article Meta -->
-         <x-blog-detail.molecules.content  />
+         <x-blog-detail.molecules.blog-detail-content :blog="$blog" />
      </article>
  </div>

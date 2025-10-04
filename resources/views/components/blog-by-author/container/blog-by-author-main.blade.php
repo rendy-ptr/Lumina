@@ -49,7 +49,7 @@
 
                             <div class="flex items-center justify-between mb-6">
                                 <div class="flex items-center space-x-3">
-                                    <img src="{{ $blog->user->authorProfile->avatar_url }}"
+                                    <img src="{{ $blog->user->avatar_url }}"
                                         alt="{{ $blog->user->name }}"
                                         class="w-10 h-10 rounded-full border-2 border-white/20">
                                     <div>

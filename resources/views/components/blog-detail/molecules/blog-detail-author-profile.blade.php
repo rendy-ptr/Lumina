@@ -1,6 +1,6 @@
 <div class="p-6">
     <div class="text-center">
-        <img src="{{ $blog->user->authorProfile->avatar_url }}" alt="{{ $blog->user->name }}"
+        <img src="{{ $blog->user->avatar_url }}" alt="{{ $blog->user->name }}"
             class="w-20 h-20 rounded-full border-2 border-white/20 mx-auto mb-4">
         <h3 class="text-xl font-bold text-white mb-2">{{ $blog->user->name }}</h3>
         <p class="text-white/70 mb-4 text-sm">

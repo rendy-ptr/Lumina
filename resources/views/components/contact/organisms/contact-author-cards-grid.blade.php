@@ -1,5 +1,5 @@
 <section class="pb-20">
     <div class="max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <x-contact.molecules.author-card />
+        <x-contact.molecules.contact-author-card :authors="$authors" />
     </div>
 </section>

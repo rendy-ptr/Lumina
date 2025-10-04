@@ -10,8 +10,8 @@
         </div>
 
         <!-- First Featured Post -->
-        <x-home.molecules.featured-post-first />
+        <x-home.molecules.home-featured-post-first :featuredPost="$featuredPost" />
         <!-- Secondary Featured Posts -->
-        <x-home.molecules.featured-post-second />
+        <x-home.molecules.home-featured-post-secondary :otherTopPosts="$otherTopPosts" />
     </div>
 </section>

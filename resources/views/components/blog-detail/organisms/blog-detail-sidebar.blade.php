@@ -1,6 +1,6 @@
 <div class="lg:w-1/3">
     <div class="card mb-8">
-        <x-blog-detail.molecules.author-profile :blog="$blog" />
+        <x-blog-detail.molecules.blog-detail-author-profile :blog="$blog" />
     </div>
 
     <!-- Comments Section -->
@@ -10,10 +10,10 @@
                 ({{ $blog->comments->count() }})</h3>
 
             <!-- Comments List -->
-            <x-blog-detail.molecules.comments-list :blog="$blog" />
+            <x-blog-detail.molecules.blog-detail-comments-list :blog="$blog" />
 
             <!-- Comment Form -->
-            <x-blog-detail.molecules.comment-form :blog="$blog" />
+            <x-blog-detail.molecules.blog-detail-comment-form :blog="$blog" />
         </div>
     </div>
 </div>

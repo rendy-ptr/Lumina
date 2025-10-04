@@ -5,7 +5,7 @@
 
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 pb-6 border-b border-white/10">
         <div class="flex items-center space-x-4">
-            <img src="{{ $blog->user->authorProfile->avatar_url }}" alt="{{ $blog->user->name }}"
+            <img src="{{ $blog->user->avatar_url }}" alt="{{ $blog->user->name }}"
                 class="w-12 h-12 rounded-full border-2 border-white/20">
             <div>
                 <p class="text-white font-semibold">

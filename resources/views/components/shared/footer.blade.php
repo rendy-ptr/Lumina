@@ -3,16 +3,16 @@
         <!-- Grid Layout Responsive -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <!-- Brand -->
-            <x-footer.molecules.brand />
+            <x-footer.molecules.footer-brand />
 
             <!-- Quick Links -->
-            <x-footer.molecules.links />
+            <x-footer.molecules.footer-links />
 
             <!-- Newsletter -->
-            <x-footer.molecules.newsletter />
+            <x-footer.molecules.footer-newsletter />
         </div>
 
         <!-- Bottom Bar -->
-        <x-footer.molecules.bottom-bar />
+        <x-footer.molecules.footer-bottom-bar />
     </div>
 </footer>

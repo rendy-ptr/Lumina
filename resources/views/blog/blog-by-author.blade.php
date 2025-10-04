@@ -2,7 +2,7 @@
 
 
     <!-- Main Content -->
-    <x-blog-author.container.main :blogs="$blogs" />
+    <x-blog-by-author.container.blog-by-author-main :blogs="$blogs" />
 
 
 </x-layouts.app-layout>

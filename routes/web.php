@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Author\DashboardController as AuthorDashboardController;
 use App\Http\Controllers\Author\ProfileController as AuthorProfileController;
 
@@ -15,9 +18,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/logout', 'logout')->name('logout');
 });
 
-Route::view('/', 'pages.home')->name('home');
-Route::view('/about', 'pages.about')->name('about');
-Route::view('/contact', 'pages.contact')->name('contact');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::prefix('author')->name('author.')->group(function () {
     Route::get('/dashboard', [AuthorDashboardController::class, 'index'])->name('dashboard');

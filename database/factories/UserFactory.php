@@ -23,10 +23,13 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->name();
+        $avatarUrl = 'https://ui-avatars.com/api/?name=' . urlencode($name);
         return [
-            'name' => fake()->name(),
+            'name' => $name,
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
+            'avatar_url' => $avatarUrl,
             'role' => 'visitor',
         ];
     }
@@ -38,8 +41,13 @@ class UserFactory extends Factory
     {
         return $this->state(fn(array $attributes) => [
             'role' => 'author',
-        ]);
+        ])->afterCreating(function ($user) {
+            $user->authorProfile()->create(
+                AuthorProfileFactory::new()->make()->toArray()
+            );
+        });
     }
+
 
     public function visitor()
     {
