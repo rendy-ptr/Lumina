@@ -11,20 +11,80 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
-class ProfileController extends Controller
+class AuthorProfileController extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
+        abort_unless($user && $user->role === 'author', 403);
+
+        $profile = $user->authorProfile;
+        $articlesCount = $user->blogs()->count();
+        $profile->follower = $profile->follower;
+
+        $socialLinks = [
+            [
+                'label' => 'Website',
+                'icon' => 'fas-globe',
+                'url' => $profile?->website_url,
+            ],
+            [
+                'label' => 'LinkedIn',
+                'icon' => 'fab-linkedin',
+                'url' => $profile?->linkedin_url,
+            ],
+            [
+                'label' => 'Twitter / X',
+                'icon' => 'fab-x-twitter',
+                'url' => $profile?->twitter_url,
+            ],
+            [
+                'label' => 'Facebook',
+                'icon' => 'fab-facebook',
+                'url' => $profile?->facebook_url,
+            ],
+            [
+                'label' => 'Instagram',
+                'icon' => 'fab-instagram',
+                'url' => $profile?->instagram_url,
+            ],
+            [
+                'label' => 'Email',
+                'icon' => 'fas-envelope',
+                'url' => $profile?->email,
+            ],
+        ];
+
+        $stats = [
+            [
+                'label' => 'Articles',
+                'value' => $articlesCount,
+            ],
+            [
+                'label' => 'Followers',
+                'value' => $profile->follower,
+            ],
+        ];
+
+
+        return view('author.profile.index', [
+            'user' => $user,
+            'profile' => $profile,
+            'socialLinks' => $socialLinks,
+            'stats' =>  $stats,
+        ]);
+    }
+
     public function edit()
     {
         $user = Auth::user();
         abort_unless($user && $user->role === 'author', 403);
 
         $profile = $user->authorProfile;
-        $publicProfileUrl = $user ? route('blog.byAuthor', $user->id) : route('blog.index');
 
         return view('author.profile.edit', [
             'user' => $user,
             'profile' => $profile,
-            'publicProfileUrl' => $publicProfileUrl,
         ]);
     }
 
@@ -45,7 +105,7 @@ class ProfileController extends Controller
             'facebook_url' => ['nullable', 'url', 'max:255'],
             'instagram_url' => ['nullable', 'url', 'max:255'],
             'website_url' => ['nullable', 'url', 'max:255'],
-            'email' => ['nullable', 'email', 'max:255', Rule::unique('author_profiles', 'email')->ignore($profile?->id)],
+            'email' => ['nullable', 'email', 'max:255'],
             'avatar' => ['nullable', 'image', 'max:2048'],
         ]);
 
@@ -72,17 +132,18 @@ class ProfileController extends Controller
         ]);
         $profile->save();
 
-        $user->fill([
-            'name' => $validated['name'],
-        ]);
+        $oldName = $user->name;
+        $user->name = $validated['name'];
 
         if ($avatarUrl) {
             $user->avatar_url = $avatarUrl;
+        } elseif ($oldName !== $validated['name']) {
+            $user->avatar_url = 'https://ui-avatars.com/api/?name=' . urlencode($user->name);
         }
 
         $user->save();
 
-        return back()->with('status', __('Profile updated successfully.'));
+        return back()->with('status', 'Profile updated successfully.');
     }
 
     protected function uploadAvatarToCloudinary(UploadedFile $avatar, int $userId): string

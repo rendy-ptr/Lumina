@@ -7,8 +7,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Author\DashboardController as AuthorDashboardController;
-use App\Http\Controllers\Author\ProfileController as AuthorProfileController;
+use App\Http\Controllers\Author\DashboardController;
+use App\Http\Controllers\Author\AuthorProfileController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLogin')->name('login');
@@ -23,13 +23,14 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::prefix('author')->name('author.')->group(function () {
-    Route::get('/dashboard', [AuthorDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/posts', [AuthorDashboardController::class, 'posts'])->name('posts.index');
-    Route::get('/posts/create', [AuthorDashboardController::class, 'createPost'])->name('posts.create');
-    Route::get('/posts/{id}/edit', [AuthorDashboardController::class, 'editPost'])->name('posts.edit');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/posts', [DashboardController::class, 'posts'])->name('posts.index');
+    Route::get('/posts/create', [DashboardController::class, 'createPost'])->name('posts.create');
+    Route::get('/posts/{id}/edit', [DashboardController::class, 'editPost'])->name('posts.edit');
 
-    Route::get('/profile', [AuthorProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profile', [AuthorProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [AuthorProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [AuthorProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [AuthorProfileController::class, 'update'])->name('profile.update');
 });
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');

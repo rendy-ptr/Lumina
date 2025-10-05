@@ -37,10 +37,10 @@ class DashboardController extends Controller
                 'accent' => 'from-emerald-500 to-teal-500',
             ],
             [
-                'title' => 'Reader View',
-                'description' => 'See how your profile and articles appear to readers.',
+                'title' => 'Profile View',
+                'description' => 'See how your profile appear to readers.',
                 'icon' => 'heroicon-o-eye',
-                'route' => $publicProfileUrl,
+                'route' => route('author.profile.index'),
                 'accent' => 'from-amber-500 to-orange-500',
             ],
         ]);

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('facebook_url')->nullable();
             $table->string('instagram_url')->nullable();
             $table->string('website_url')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->nullable();
             $table->integer('follower')->default(0);
             $table->timestamps();
         });
