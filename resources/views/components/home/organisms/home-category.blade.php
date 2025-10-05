@@ -9,6 +9,6 @@
             </p>
         </div>
 
-        <x-home.molecules.home-category-lists />
+        <x-home.molecules.home-category-lists :categories="$categories" />
     </div>
 </section>

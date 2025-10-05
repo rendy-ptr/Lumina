@@ -6,5 +6,5 @@
     <x-home.organisms.home-featured-post :featuredPost="$featuredPost" :otherTopPosts="$otherTopPosts" />
 
     <!-- Categories Section -->
-    <x-home.organisms.home-category />
+    <x-home.organisms.home-category :categories="$categories" />
 </main>

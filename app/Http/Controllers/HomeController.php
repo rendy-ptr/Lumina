@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -20,6 +21,8 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return view('pages.home', compact('featuredPost', 'otherTopPosts'));
+        $categories = Category::withCount('blogs')->get();
+
+        return view('pages.home', compact('featuredPost', 'otherTopPosts', 'categories'));
     }
 }

@@ -1,4 +1,4 @@
-﻿<x-layouts.author-layout title="Profile Settings">
+<x-layouts.author-layout title="Profile Settings">
     <section class="space-y-8">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
@@ -28,7 +28,9 @@
             <div class="glass-strong rounded-3xl border border-white/10 p-6 space-y-6">
                 <div class="flex flex-col items-center text-center space-y-3">
                     <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
-                        class="w-28 h-28 rounded-2xl object-cover border border-white/20">
+                        class=                        class="w-28 h-28 rounded-2xl object-cover border border-white/20"
+                        data-avatar-preview-target
+                        data-avatar-preview-original="{{ $user->avatar_url }}">
                     <div>
                         <p class="text-lg font-semibold text-white">{{ $user->name }}</p>
                         <p class="text-sm text-white/60">{{ $user->email }}</p>
@@ -56,14 +58,18 @@
                     <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-3 sm:space-y-0">
                         <div class="flex items-center space-x-3">
                             <img src="{{ $user->avatar_url }}" alt="Current avatar"
-                                class="w-16 h-16 rounded-xl object-cover border border-white/10">
-                            <p class="text-xs text-white/50">PNG or JPG up to 2 MB.</p>
+                                class="w-16 h-16 rounded-xl object-cover border border-white/10"
+                                data-avatar-preview-target
+                                data-avatar-preview-original="{{ $user->avatar_url }}">
+                            <div class="text-xs text-white/50 space-y-1">
+                                <p>PNG atau JPG hingga 2 MB.</p>
+                                <p class="text-emerald-300 hidden" data-avatar-preview-status>Preview updated.</p>
+                            </div>
                         </div>
                         <label
                             class="btn-glass px-4 py-2 rounded-xl text-sm text-white/80 hover:text-white cursor-pointer">
-                            <input type="file" name="avatar" class="hidden" accept="image/*">
-                            <span>Choose image</span>
-                        </label>
+                            <input type="file" name="avatar" class="hidden" accept="image/*" data-avatar-preview-input>
+              </label>
                     </div>
                 </div>
 

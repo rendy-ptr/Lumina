@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
+            $table->string('icon')->nullable();
+            $table->string('description')->nullable();
+            $table->string('from_color')->nullable();
+            $table->string('to_color')->nullable();
             $table->timestamps();
         });
     }

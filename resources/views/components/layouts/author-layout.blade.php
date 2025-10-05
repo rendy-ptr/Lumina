@@ -2,10 +2,6 @@
 
 @php
     $user = auth()->user();
-    $avatar = $user?->profile_photo_url
-        ?? $user?->visitorProfile?->avatar_url
-        ?? $user?->authorProfile?->avatar_url
-        ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name);
 @endphp
 
 <!DOCTYPE html>
@@ -27,7 +23,8 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('author.dashboard') }}" class="flex items-center space-x-3">
-                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 shadow-lg">
+                        <span
+                            class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 shadow-lg">
                             <x-heroicon-o-pencil class="w-5 h-5 text-white" />
                         </span>
                         <div>
@@ -52,10 +49,11 @@
                         <span>Creator resources</span>
                     </a>
                     <div class="flex items-center space-x-3 bg-white/5 border border-white/10 rounded-2xl px-3 py-2">
-                        <img src="{{ $avatar }}" alt="{{ $user->name ?? 'Author' }}" class="w-9 h-9 rounded-xl object-cover">
+                        <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
+                            class="w-9 h-9 rounded-xl object-cover">
                         <div>
-                            <p class="text-sm font-medium text-white">{{ $user->name ?? 'Author' }}</p>
-                            <p class="text-xs text-white/50">{{ $user->email ?? 'author@example.com' }}</p>
+                            <p class="text-sm font-medium text-white">{{ $user->name }}</p>
+                            <p class="text-xs text-white/50">{{ $user->email }}</p>
                         </div>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
