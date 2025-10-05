@@ -59,6 +59,7 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => $validated['role'],
+            'avatar_url' => 'https://ui-avatars.com/api/?name=' . urlencode($validated['name']),
         ]);
 
         return redirect()->route('login')->with('status', __('Registration successful. Please sign in.'));
@@ -74,4 +75,3 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 }
-

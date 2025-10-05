@@ -27,8 +27,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="glass-strong rounded-3xl border border-white/10 p-6 space-y-6">
                 <div class="flex flex-col items-center text-center space-y-3">
-                    <img src="{{ $profile->avatar_url ?? 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}"
-                        alt="{{ $user->name }}" class="w-28 h-28 rounded-2xl object-cover border border-white/20">
+                    <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
+                        class="w-28 h-28 rounded-2xl object-cover border border-white/20">
                     <div>
                         <p class="text-lg font-semibold text-white">{{ $user->name }}</p>
                         <p class="text-sm text-white/60">{{ $user->email }}</p>
@@ -55,8 +55,8 @@
                     <label class="block text-sm font-medium text-white/70">Profile photo</label>
                     <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-3 sm:space-y-0">
                         <div class="flex items-center space-x-3">
-                            <img src="{{ $profile->avatar_url ?? 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=128&h=128&q=80' }}"
-                                alt="Current avatar" class="w-16 h-16 rounded-xl object-cover border border-white/10">
+                            <img src="{{ $user->avatar_url }}" alt="Current avatar"
+                                class="w-16 h-16 rounded-xl object-cover border border-white/10">
                             <p class="text-xs text-white/50">PNG or JPG up to 2 MB.</p>
                         </div>
                         <label
@@ -69,14 +69,14 @@
 
                 <div class="space-y-2">
                     <label class="block text-sm font-medium text-white/70">Job title</label>
-                    <input type="text" name="job_title" value="{{ old('job_title', $profile->job_title) }}"
+                    <input type="text" name="job_title" value="{{ old('job_title', $profile->job_title ?? '') }}"
                         placeholder="Investigative Journalist, Storyteller, etc."
                         class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
                 </div>
 
                 <div class="space-y-2">
                     <label class="block text-sm font-medium text-white/70">Signature quote</label>
-                    <input type="text" name="quote" value="{{ old('quote', $profile->quote) }}"
+                    <input type="text" name="quote" value="{{ old('quote', $profile->quote ?? '') }}"
                         placeholder="Write a short quote that represents your voice."
                         class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
                 </div>
@@ -85,47 +85,47 @@
                     <label class="block text-sm font-medium text-white/70">Bio</label>
                     <textarea name="bio" rows="6"
                         placeholder="Introduce yourself, the themes you cover, and what readers can expect."
-                        class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">{{ old('bio', $profile->bio) }}</textarea>
+                        class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">{{ old('bio', $profile->bio ?? '') }}</textarea>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white/70">LinkedIn URL</label>
                         <input type="url" name="linkedin_url"
-                            value="{{ old('linkedin_url', $profile->linkedin_url) }}"
+                            value="{{ old('linkedin_url', $profile->linkedin_url ?? '') }}"
                             placeholder="https://linkedin.com/in/username"
                             class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
                     </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white/70">Twitter URL</label>
                         <input type="url" name="twitter_url"
-                            value="{{ old('twitter_url', $profile->twitter_url) }}"
+                            value="{{ old('twitter_url', $profile->twitter_url ?? '') }}"
                             placeholder="https://twitter.com/username"
                             class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
                     </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white/70">Facebook URL</label>
                         <input type="url" name="facebook_url"
-                            value="{{ old('facebook_url', $profile->facebook_url) }}"
+                            value="{{ old('facebook_url', $profile->facebook_url ?? '') }}"
                             placeholder="https://facebook.com/username"
                             class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
                     </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white/70">Instagram URL</label>
                         <input type="url" name="instagram_url"
-                            value="{{ old('instagram_url', $profile->instagram_url) }}"
+                            value="{{ old('instagram_url', $profile->instagram_url ?? '') }}"
                             placeholder="https://instagram.com/username"
                             class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
                     </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white/70">Website URL</label>
                         <input type="url" name="website_url"
-                            value="{{ old('website_url', $profile->website_url) }}"
+                            value="{{ old('website_url', $profile->website_url ?? '') }}"
                             placeholder="https://yourwebsite.com"
                             class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
                     </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-white/70">Gmail</label>
-                        <input type="email" name="gmail" value="{{ old('gmail', $profile->gmail) }}"
+                        <input type="email" name="gmail" value="{{ old('gmail', $profile->gmail ?? '') }}"
                             placeholder="you@gmail.com"
                             class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
                     </div>

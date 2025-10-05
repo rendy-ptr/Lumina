@@ -8,11 +8,12 @@
             <div class="p-6">
                 <div class="text-center mb-4">
                     <h3 class="text-xl font-bold text-white mb-1">{{ $author->name }}</h3>
-                    <p class="text-purple-400 text-sm">{{ $author->authorProfile->job_title }}</p>
+                    <p class="text-purple-400 text-sm">
+                        {{ $author->authorProfile->job_title ?? 'job title not filled in yet' }}</p>
                 </div>
 
                 <p class="text-white/70 text-sm mb-6 text-center">
-                    {{ $author->authorProfile->bio }}
+                    {{ $author->authorProfile->bio ?? 'bio not filled in yet' }}
                 </p>
 
                 <div class="flex justify-center space-x-4 mb-6">
@@ -68,6 +69,15 @@
                             title="Email {{ $author->name }}">
                             @svg('css-mail', 'w-5 h-5')
                         </a>
+                    @endif
+
+                    @if (empty($author->authorProfile->linkedin_url) &&
+                            empty($author->authorProfile->twitter_url) &&
+                            empty($author->authorProfile->facebook_url) &&
+                            empty($author->authorProfile->instagram_url) &&
+                            empty($author->authorProfile->website_url) &&
+                            empty($author->authorProfile->email))
+                        <p class="text-gray-400 text-sm">No social links available.</p>
                     @endif
                 </div>
             </div>

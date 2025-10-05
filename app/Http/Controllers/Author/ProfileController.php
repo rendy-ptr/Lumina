@@ -15,7 +15,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         abort_unless($user && $user->role === 'author', 403);
 
-        $profile = $this->resolveProfile($user);
+        $profile = $user->authorProfile;
         $publicProfileUrl = $user ? route('blog.byAuthor', $user->id) : route('blog.index');
 
         return view('author.profile.edit', [
@@ -32,12 +32,19 @@ class ProfileController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'bio' => ['nullable', 'string', 'max:1000'],
+            'bio' => ['required', 'string', 'max:1000'],
+            'job_title' => ['required', 'string', 'max:255'],
+            'quote' => ['required', 'string', 'max:255'],
             'linkedin_url' => ['nullable', 'url', 'max:255'],
-            'avatar' => ['nullable', 'image', 'max:2048'],
+            'twitter_url' => ['nullable', 'url', 'max:255'],
+            'facebook_url' => ['nullable', 'url', 'max:255'],
+            'instagram_url' => ['nullable', 'url', 'max:255'],
+            'website_url' => ['nullable', 'url', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'avatar' => ['required', 'image', 'max:2048'],
         ]);
 
-        $profile = $this->resolveProfile($user);
+        $profile = $user->authorProfile;
 
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
@@ -61,19 +68,5 @@ class ProfileController extends Controller
         }
 
         return back()->with('status', __('Profile updated successfully.'));
-    }
-
-    private function resolveProfile($user)
-    {
-        $profile = $user->authorProfile;
-
-        if (! $profile) {
-            $profile = $user->authorProfile()->create([
-                'avatar_url' => $user->profile_photo_url
-                    ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name)
-            ]);
-        }
-
-        return $profile;
     }
 }

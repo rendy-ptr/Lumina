@@ -1,7 +1,7 @@
 <x-layouts.app-layout title="Register - Lumina">
     <main class="relative z-10 py-20">
         <section class="pt-20">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid gap-12 lg:grid-cols-2 items-center">
                     <div class="order-2 lg:order-1 glass-strong rounded-3xl p-8 border border-white/10 shadow-2xl">
                         <h2 class="text-2xl font-semibold text-white mb-6">Create your account</h2>
@@ -48,7 +48,7 @@
                                                 <div>
                                                     <p class="text-sm font-semibold text-white">Reader / Visitor</p>
                                                     <p class="text-xs text-gray-400 mt-1">following, manage Account, and
-                                                        access comment in author articles.</p>
+                                                        access comment in all author articles.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +134,7 @@
                     <div class="order-1 lg:order-2 space-y-6 text-center lg:text-left">
                         <span
                             class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/5 border border-white/10 text-gradient">
-                            Join the community
+                            Join To Lumina Free
                         </span>
                         <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight">
                             Unlock a personalized reading experience with <span class="text-gradient">Lumina</span>
