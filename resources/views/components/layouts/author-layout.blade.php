@@ -39,6 +39,8 @@
                             class="px-4 py-2 rounded-xl transition {{ request()->routeIs('author.posts.*') ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white hover:bg-white/5' }}">Articles</a>
                         <a href="{{ route('author.profile.edit') }}"
                             class="px-4 py-2 rounded-xl transition {{ request()->routeIs('author.profile.*') ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white hover:bg-white/5' }}">Profile</a>
+                        <a href="{{ route('author.setting.index') }}"
+                            class="px-4 py-2 rounded-xl transition {{ request()->routeIs('author.setting.*') ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white hover:bg-white/5' }}">Settings</a>
                     </nav>
                 </div>
 

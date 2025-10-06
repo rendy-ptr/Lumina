@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\User;
 
 
 class BlogController extends Controller
@@ -42,6 +43,8 @@ class BlogController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
+        $query->increment('views');
+
         $relatedBlogs = Blog::with(['user.authorProfile', 'category'])
             ->where('user_id', $query->user_id)
             ->where('id', '!=', $query->id)
@@ -58,16 +61,15 @@ class BlogController extends Controller
 
     public function byAuthor($userId)
     {
+        $user = User::where('role', 'author')->findOrFail($userId);
         $blogs = Blog::with(['user.authorProfile', 'category'])
-            ->whereHas('user', function ($q) {
-                $q->where('role', 'author');
-            })
             ->where('user_id', $userId)
             ->latest()
             ->paginate(9);
 
         return view('blog.blog-by-author', [
             'blogs' => $blogs,
+            'author' => $user
         ]);
     }
 }

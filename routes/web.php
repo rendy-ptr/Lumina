@@ -9,6 +9,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Author\DashboardController;
 use App\Http\Controllers\Author\AuthorProfileController;
+use App\Http\Controllers\Author\AuthorSettingController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLogin')->name('login');
@@ -31,6 +32,10 @@ Route::prefix('author')->name('author.')->group(function () {
     Route::get('/profile', [AuthorProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [AuthorProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [AuthorProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/settings', [AuthorSettingController::class, 'index'])->name('setting.index');
+    Route::get('/settings/edit', [AuthorSettingController::class, 'edit'])->name('setting.edit');
+    Route::post('/settings/update', [AuthorSettingController::class, 'update'])->name('setting.update');
 });
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');

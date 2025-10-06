@@ -29,6 +29,7 @@ return new class extends Migration
 
             $table->unsignedInteger('likes_count')->default(0);
             $table->unsignedInteger('comments_count')->default(0);
+            $table->unsignedBigInteger('views')->default(0);
 
             $table->timestamps();
         });

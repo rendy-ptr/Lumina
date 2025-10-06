@@ -6,9 +6,7 @@
             <div class="text-center mb-12">
                 <h1
                     class="text-3xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
-                    @if ($blogs->isNotEmpty())
-                        {{ $blogs->first()->user->name }}
-                    @endif
+                    {{ $author->name }}
                     <span class="text-gradient">Articles</span>
                 </h1>
             </div>
@@ -49,8 +47,7 @@
 
                             <div class="flex items-center justify-between mb-6">
                                 <div class="flex items-center space-x-3">
-                                    <img src="{{ $blog->user->avatar_url }}"
-                                        alt="{{ $blog->user->name }}"
+                                    <img src="{{ $blog->user->avatar_url }}" alt="{{ $blog->user->name }}"
                                         class="w-10 h-10 rounded-full border-2 border-white/20">
                                     <div>
                                         <p class="text-white font-medium text-sm text-left">
@@ -98,7 +95,11 @@
                         </div>
                     </article>
                 @empty
-                    <p class="text-center text-white/60">Belum ada artikel.</p>
+                    <div class="col-span-full min-h-[60vh] flex items-center justify-center">
+                        <div class="text-center">
+                            <span class="text-2xl text-white/70">Article Not Found By Author {{ $author->name }}</span>
+                        </div>
+                    </div>
                 @endforelse
             </div>
         </div>

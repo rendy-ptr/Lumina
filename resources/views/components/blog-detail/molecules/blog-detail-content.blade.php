@@ -28,6 +28,13 @@
                 <span class="like-count text-white/70">{{ $blog->likes_count }}</span>
             </button>
 
+            {{-- View Button --}}
+            <div
+                class="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/70">
+                <x-heroicon-o-eye class="w-5 h-5 text-white/50" />
+                <span>{{ $blog->views }}</span>
+            </div>
+
             <!-- Share Button -->
             <button class="share-btn btn-glass px-4 py-2 rounded-xl flex items-center space-x-2">
                 <x-heroicon-o-share class="w-5 h-5" />

@@ -23,17 +23,17 @@ class DashboardController extends Controller
                 'accent' => 'from-blue-500 to-indigo-500',
             ],
             [
-                'title' => 'Manage Drafts',
+                'title' => 'Manage Articles',
                 'description' => 'Review drafts, continue writing, or publish when ready.',
                 'icon' => 'heroicon-o-document-text',
                 'route' => route('author.posts.index'),
                 'accent' => 'from-purple-500 to-pink-500',
             ],
             [
-                'title' => 'Published Articles',
+                'title' => 'View Published Articles',
                 'description' => 'Keep tabs on live stories and their performance.',
                 'icon' => 'heroicon-o-sparkles',
-                'route' => route('author.posts.index'),
+                'route' => route('blog.byAuthor', $user->id),
                 'accent' => 'from-emerald-500 to-teal-500',
             ],
             [
@@ -96,12 +96,17 @@ class DashboardController extends Controller
             [
                 'label' => 'View public profile',
                 'icon' => 'heroicon-o-user-circle',
-                'route' => $publicProfileUrl,
+                'route' => route('author.profile.index'),
+            ],
+            [
+                'label' => 'Edit profile',
+                'icon' => 'heroicon-o-pencil-square',
+                'route' => route('author.profile.edit'),
             ],
             [
                 'label' => 'Account settings',
                 'icon' => 'heroicon-o-cog-6-tooth',
-                'route' => '#',
+                'route' => route('author.setting.edit'),
             ],
             [
                 'label' => 'Support & resources',
