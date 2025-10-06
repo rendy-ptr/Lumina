@@ -86,11 +86,20 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label for="email_password" class="block text-sm font-medium text-white/70">Confirm with
-                            password</label>
-                        <input id="email_password" type="password" name="email_current_password"
-                            placeholder="Current password"
-                            class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+                        <label for="email_password" class="block text-sm font-medium text-white/70">
+                            Confirm with password
+                        </label>
+                        <div class="relative">
+                            <input id="email_password" type="password" name="email_current_password"
+                                placeholder="Current password"
+                                class="w-full px-4 py-3 pr-12 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+                            <button type="button"
+                                class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white transition"
+                                data-password-toggle="email_password" aria-label="Toggle password visibility">
+                                <x-heroicon-o-eye class="w-5 h-5" data-icon="show" />
+                                <x-heroicon-o-eye-slash class="w-5 h-5 hidden" data-icon="hide" />
+                            </button>
+                        </div>
                     </div>
 
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -116,23 +125,48 @@
                         <div class="space-y-2">
                             <label for="current_password" class="block text-sm font-medium text-white/70">Current
                                 password</label>
-                            <input id="current_password" type="password" name="current_password"
-                                autocomplete="current-password" placeholder="Current password"
-                                class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+                            <div class="relative">
+                                <input id="current_password" type="password" name="current_password"
+                                    autocomplete="current-password" placeholder="Current password"
+                                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+                                <button type="button"
+                                    class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white transition"
+                                    data-password-toggle="current_password" aria-label="Toggle password visibility">
+                                    <x-heroicon-o-eye class="w-5 h-5" data-icon="show" />
+                                    <x-heroicon-o-eye-slash class="w-5 h-5 hidden" data-icon="hide" />
+                                </button>
+                            </div>
                         </div>
                         <div class="space-y-2">
                             <label for="new_password" class="block text-sm font-medium text-white/70">New
                                 password</label>
-                            <input id="new_password" type="password" name="password" autocomplete="new-password"
-                                placeholder="Choose a new password"
-                                class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+                            <div class="relative">
+                                <input id="new_password" type="password" name="password" autocomplete="new-password"
+                                    placeholder="Choose a new password"
+                                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+                                <button type="button"
+                                    class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white transition"
+                                    data-password-toggle="new_password" aria-label="Toggle password visibility">
+                                    <x-heroicon-o-eye class="w-5 h-5" data-icon="show" />
+                                    <x-heroicon-o-eye-slash class="w-5 h-5 hidden" data-icon="hide" />
+                                </button>
+                            </div>
                         </div>
                         <div class="space-y-2 md:col-span-2">
                             <label for="password_confirmation" class="block text-sm font-medium text-white/70">Confirm
                                 new password</label>
-                            <input id="password_confirmation" type="password" name="password_confirmation"
-                                autocomplete="new-password" placeholder="Repeat new password"
-                                class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+                            <div class="relative">
+                                <input id="password_confirmation" type="password" name="password_confirmation"
+                                    autocomplete="new-password" placeholder="Repeat new password"
+                                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+                                <button type="button"
+                                    class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white transition"
+                                    data-password-toggle="password_confirmation"
+                                    aria-label="Toggle password visibility">
+                                    <x-heroicon-o-eye class="w-5 h-5" data-icon="show" />
+                                    <x-heroicon-o-eye-slash class="w-5 h-5 hidden" data-icon="hide" />
+                                </button>
+                            </div>
                         </div>
                     </div>
 
