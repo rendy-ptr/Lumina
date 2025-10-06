@@ -25,9 +25,10 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::prefix('author')->name('author.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/posts', [DashboardController::class, 'posts'])->name('posts.index');
-    Route::get('/posts/create', [DashboardController::class, 'createPost'])->name('posts.create');
-    Route::get('/posts/{id}/edit', [DashboardController::class, 'editPost'])->name('posts.edit');
+    Route::get('/blogs', [DashboardController::class, 'blogs'])->name('blogs.index');
+    Route::get('/blogs/create', [DashboardController::class, 'createBlog'])->name('blogs.create');
+    Route::post('/blogs', [DashboardController::class, 'storeBlog'])->name('blogs.store');
+    Route::get('/blogs/{id}/edit', [DashboardController::class, 'editBlog'])->name('blogs.edit');
 
     Route::get('/profile', [AuthorProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [AuthorProfileController::class, 'edit'])->name('profile.edit');

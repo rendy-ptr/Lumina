@@ -35,8 +35,8 @@
                     <nav class="hidden md:flex items-center space-x-3 text-sm">
                         <a href="{{ route('author.dashboard') }}"
                             class="px-4 py-2 rounded-xl transition {{ request()->routeIs('author.dashboard') ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white hover:bg-white/5' }}">Dashboard</a>
-                        <a href="{{ route('author.posts.index') }}"
-                            class="px-4 py-2 rounded-xl transition {{ request()->routeIs('author.posts.*') ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white hover:bg-white/5' }}">Articles</a>
+                        <a href="{{ route('author.blogs.index') }}"
+                            class="px-4 py-2 rounded-xl transition {{ request()->routeIs('author.blogs.*') ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white hover:bg-white/5' }}">Articles</a>
                         <a href="{{ route('author.profile.edit') }}"
                             class="px-4 py-2 rounded-xl transition {{ request()->routeIs('author.profile.*') ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white hover:bg-white/5' }}">Profile</a>
                         <a href="{{ route('author.setting.index') }}"

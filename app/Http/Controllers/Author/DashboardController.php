@@ -6,6 +6,14 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Blog;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use App\Data\AuthorDashboardData;
 
 class DashboardController extends Controller
 {
@@ -14,146 +22,165 @@ class DashboardController extends Controller
         $user = Auth::user();
         $publicProfileUrl = $user ? route('blog.byAuthor', $user->id) : route('blog.index');
 
-        $articleActions = collect([
-            [
-                'title' => 'Write New Article',
-                'description' => 'Capture your next idea in a focused editor.',
-                'icon' => 'heroicon-o-pencil-square',
-                'route' => route('author.posts.create'),
-                'accent' => 'from-blue-500 to-indigo-500',
-            ],
-            [
-                'title' => 'Manage Articles',
-                'description' => 'Review drafts, continue writing, or publish when ready.',
-                'icon' => 'heroicon-o-document-text',
-                'route' => route('author.posts.index'),
-                'accent' => 'from-purple-500 to-pink-500',
-            ],
-            [
-                'title' => 'View Published Articles',
-                'description' => 'Keep tabs on live stories and their performance.',
-                'icon' => 'heroicon-o-sparkles',
-                'route' => route('blog.byAuthor', $user->id),
-                'accent' => 'from-emerald-500 to-teal-500',
-            ],
-            [
-                'title' => 'Profile View',
-                'description' => 'See how your profile appear to readers.',
-                'icon' => 'heroicon-o-eye',
-                'route' => route('author.profile.index'),
-                'accent' => 'from-amber-500 to-orange-500',
-            ],
-        ]);
+        $articleActions = AuthorDashboardData::articleActions($user);
 
-        $drafts = collect([
-            [
-                'title' => 'Designing for Calm Interfaces',
-                'updated' => Carbon::now()->subDays(1)->diffForHumans(),
-                'words' => '1.2k words',
-            ],
-            [
-                'title' => 'Habits for Intentional Productivity',
-                'updated' => Carbon::now()->subDays(3)->diffForHumans(),
-                'words' => '840 words',
-            ],
-        ]);
+        $profileLinks = AuthorDashboardData::profileLinks();
 
-        $published = collect([
-            [
-                'title' => 'Finding Focus in a Noisy World',
-                'published' => Carbon::now()->subWeeks(1)->format('M j, Y'),
-                'reads' => '2.4k reads',
-            ],
-            [
-                'title' => 'Creating Narrative Around Data',
-                'published' => Carbon::now()->subWeeks(2)->format('M j, Y'),
-                'reads' => '1.1k reads',
-            ],
-        ]);
-
-        $accountTasks = collect([
-            [
-                'title' => 'Upload profile photo',
-                'description' => 'A familiar face helps readers connect with you.',
-                'icon' => 'heroicon-o-camera',
-                'cta' => 'Upload photo',
-            ],
-            [
-                'title' => 'Refresh your LinkedIn URL',
-                'description' => 'Point collaborators to your professional profile.',
-                'icon' => 'heroicon-o-link',
-                'cta' => 'Add link',
-            ],
-            [
-                'title' => 'Update author bio',
-                'description' => 'Share the themes and stories you care about most.',
-                'icon' => 'heroicon-o-identification',
-                'cta' => 'Edit bio',
-            ],
-        ]);
-
-        $profileLinks = collect([
-            [
-                'label' => 'View public profile',
-                'icon' => 'heroicon-o-user-circle',
-                'route' => route('author.profile.index'),
-            ],
-            [
-                'label' => 'Edit profile',
-                'icon' => 'heroicon-o-pencil-square',
-                'route' => route('author.profile.edit'),
-            ],
-            [
-                'label' => 'Account settings',
-                'icon' => 'heroicon-o-cog-6-tooth',
-                'route' => route('author.setting.edit'),
-            ],
-            [
-                'label' => 'Support & resources',
-                'icon' => 'heroicon-o-lifebuoy',
-                'route' => '#',
-            ],
-        ]);
+        $published = Blog::where('user_id', $user->id)
+            ->orderByDesc('likes_count')
+            ->orderByDesc('views')
+            ->take(3)
+            ->get();
 
         return view('author.dashboard', [
             'user' => $user,
             'articleActions' => $articleActions,
-            'drafts' => $drafts,
             'published' => $published,
-            'accountTasks' => $accountTasks,
             'profileLinks' => $profileLinks,
             'publicProfileUrl' => $publicProfileUrl,
         ]);
     }
 
-    public function posts()
+    public function blogs()
     {
         $user = Auth::user();
         $posts = $this->samplePosts();
 
-        return view('author.posts.index', [
+        return view('author.blogs.index', [
             'user' => $user,
             'posts' => $posts,
         ]);
     }
 
-    public function createPost()
+    public function createBlog()
     {
         $user = Auth::user();
+        abort_if(is_null($user), 403);
 
-        return view('author.posts.create', [
+        $categories = Category::query()->orderBy('name')->get(['id', 'name']);
+
+        return view('author.blogs.create', [
             'user' => $user,
+            'categories' => $categories,
         ]);
     }
 
-    public function editPost(int $id)
+    public function storeBlog(Request $request)
+    {
+        $user = Auth::user();
+        abort_if(is_null($user), 403);
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:255'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'excerpt' => ['required', 'string'],
+            'thumbnail' => ['required', 'image', 'max:2048'],
+            'content' => ['required', 'string'],
+        ]);
+
+        $resolvedSlug = $this->resolveUniqueSlug($validated['slug'] ?? null, $validated['title']);
+        $thumbnailUrl = $this->uploadThumbnailToCloudinary($request->file('thumbnail'), (int) $user->id);
+
+        $blog = Blog::create([
+            'user_id' => $user->id,
+            'category_id' => $validated['category_id'],
+            'slug' => $resolvedSlug,
+            'title' => $validated['title'],
+            'excerpt' => $validated['excerpt'],
+            'thumbnail_url' => $thumbnailUrl,
+            'content' => $validated['content'],
+        ]);
+
+        return redirect()
+            ->route('author.blogs.index')
+            ->with('status', 'Article "' . $blog->title . '" created successfully.');
+    }
+
+    private function uploadThumbnailToCloudinary(UploadedFile $thumbnail, int $userId): string
+    {
+        $cloudName = config('services.cloudinary.cloud_name');
+        $apiKey = config('services.cloudinary.api_key');
+        $apiSecret = config('services.cloudinary.api_secret');
+        $folder = trim((string) config('services.cloudinary.folder'), '/');
+
+        if (! $cloudName || ! $apiKey || ! $apiSecret) {
+            throw ValidationException::withMessages([
+                'thumbnail' => __('Image upload service is not configured.'),
+            ]);
+        }
+
+        $publicIdSuffix = 'blog_' . $userId . '_' . Str::lower(Str::random(12));
+        $publicIdBase = $folder ? $folder . '/blog-thumbnails' : 'blog-thumbnails';
+        $publicId = trim($publicIdBase, '/') . '/' . $publicIdSuffix;
+        $timestamp = time();
+
+        $paramsToSign = [
+            'public_id' => $publicId,
+            'timestamp' => $timestamp,
+        ];
+
+        ksort($paramsToSign);
+
+        $signatureBase = urldecode(http_build_query($paramsToSign));
+        $signature = sha1($signatureBase . $apiSecret);
+
+        $response = Http::timeout(20)
+            ->retry(2, 250)
+            ->asMultipart()
+            ->attach('file', file_get_contents($thumbnail->getRealPath()), $thumbnail->getClientOriginalName())
+            ->post("https://api.cloudinary.com/v1_1/{$cloudName}/image/upload", [
+                'api_key' => $apiKey,
+                'timestamp' => $timestamp,
+                'signature' => $signature,
+                'public_id' => $publicId,
+            ]);
+
+        if ($response->failed()) {
+            throw ValidationException::withMessages([
+                'thumbnail' => __('Failed to upload image. Please try again later.'),
+            ]);
+        }
+
+        $data = $response->json();
+        $thumbnailUrl = $data['secure_url'] ?? $data['url'] ?? null;
+
+        if (! $thumbnailUrl) {
+            throw ValidationException::withMessages([
+                'thumbnail' => __('Image upload did not return a valid URL.'),
+            ]);
+        }
+
+        return $thumbnailUrl;
+    }
+
+    private function resolveUniqueSlug(?string $slug, string $title): string
+    {
+        $baseSlug = Str::slug($slug ?: $title);
+
+        if ($baseSlug === '') {
+            $baseSlug = Str::random(8);
+        }
+
+        $uniqueSlug = $baseSlug;
+        $suffix = 1;
+
+        while (Blog::where('slug', $uniqueSlug)->exists()) {
+            $uniqueSlug = "{$baseSlug}-{$suffix}";
+            $suffix++;
+        }
+
+        return $uniqueSlug;
+    }
+
+    public function editBlog(int $id)
     {
         $user = Auth::user();
         $post = $this->samplePosts()->firstWhere('id', $id);
 
         abort_if(is_null($post), 404);
 
-        return view('author.posts.edit', [
+        return view('author.blogs.edit', [
             'user' => $user,
             'post' => $post,
         ]);

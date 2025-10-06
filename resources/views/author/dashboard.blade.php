@@ -15,7 +15,7 @@
                         calm space.
                     </p>
                 </div>
-                <a href="{{ route('author.posts.create') }}"
+                <a href="{{ route('author.blogs.create') }}"
                     class="inline-flex items-center space-x-3 btn-primary px-5 py-3 rounded-2xl text-white font-semibold shadow-lg">
                     <x-heroicon-o-pencil-square class="w-5 h-5" />
                     <span>Start a new article</span>
@@ -51,23 +51,52 @@
             <div class="glass-strong rounded-3xl border border-white/10 p-6 lg:col-span-2">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-xl font-semibold text-white">Highlighted Article</h2>
-                    <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/60">Manage Article</span>
+                    <a href="{{ route('author.blogs.index') }}">
+                        <button class="btn-glass text-xs px-3 py-1 rounded-xl cursor-pointer">
+                            Manage Articles
+                        </button>
+                    </a>
                 </div>
+
                 <div class="space-y-4">
                     @forelse ($published as $article)
                         <div
-                            class="rounded-2xl border border-white/10 px-5 py-4 flex flex-col gap-2 hover:border-white/25 transition">
-                            <div class="flex items-center justify-between">
-                                <p class="text-white font-medium">{{ $article['title'] }}</p>
-                                <span class="text-xs text-white/50">{{ $article['reads'] }}</span>
+                            class="rounded-2xl border border-white/10 px-5 py-4 hover:border-white/25 transition flex flex-col gap-3">
+
+                            {{-- TITLE --}}
+                            <div>
+                                <p class="text-white font-medium leading-snug">
+                                    {{ $article['title'] }}
+                                </p>
                             </div>
-                            <p class="text-xs text-white/50">Published {{ $article['published'] }}</p>
+
+                            {{-- ICON STATS --}}
+                            <div class="flex flex-wrap items-center gap-4 text-xs text-white/50">
+                                <span class="flex items-center gap-1">
+                                    <x-heroicon-o-eye class="w-4 h-4" />
+                                    {{ $article['views'] }} views
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <x-heroicon-o-heart class="w-4 h-4" />
+                                    {{ $article['likes_count'] }} likes
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <x-heroicon-o-chat-bubble-left class="w-4 h-4" />
+                                    {{ $article['comments_count'] }} comments
+                                </span>
+                            </div>
+
+                            {{-- DATE --}}
+                            <p class="text-xs text-white/50">
+                                Published {{ $article['created_at']->format('d M Y') }}
+                            </p>
                         </div>
                     @empty
                         <p class="text-white/60 text-sm">Publish your first story to unlock insights.</p>
                     @endforelse
                 </div>
             </div>
+
 
             <div class="glass-strong rounded-3xl border border-white/10 p-6">
                 <h2 class="text-xl font-semibold text-white mb-6">Profile quick links</h2>

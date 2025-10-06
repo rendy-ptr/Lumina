@@ -5,7 +5,7 @@
                 <h1 class="text-2xl font-semibold text-white">Edit article</h1>
                 <p class="text-white/60 text-sm">Refine your story and keep readers engaged.</p>
             </div>
-            <a href="{{ route('author.posts.index') }}" class="btn-glass px-4 py-2 rounded-xl text-sm text-white/70 hover:text-white transition">
+            <a href="{{ route('author.blogs.index') }}" class="btn-glass px-4 py-2 rounded-xl text-sm text-white/70 hover:text-white transition">
                 Back to articles
             </a>
         </div>

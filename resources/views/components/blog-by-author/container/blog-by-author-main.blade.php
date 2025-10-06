@@ -85,6 +85,12 @@
                                         <span class="like-count text-sm">{{ $blog->likes_count }}</span>
                                     </button>
 
+                                    {{-- View Feature --}}
+                                    <div class="flex items-center space-x-1 text-white/50">
+                                        <x-heroicon-o-eye class="w-5 h-5" />
+                                        <span class="text-sm">{{ $blog->views }}</span>
+                                    </div>
+
                                     <button
                                         class="share-btn btn-glass px-3 py-2 rounded-xl text-white hover:text-purple-300 transition-colors"
                                         data-url="{{ route('blog.show', $blog->slug) }}">

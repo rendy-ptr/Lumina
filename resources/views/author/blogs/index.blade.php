@@ -5,7 +5,7 @@
                 <h1 class="text-2xl font-semibold text-white">Articles overview</h1>
                 <p class="text-white/60 text-sm">Draft, publish, and manage your writing from one focused space.</p>
             </div>
-            <a href="{{ route('author.posts.create') }}"
+            <a href="{{ route('author.blogs.create') }}"
                 class="inline-flex items-center space-x-2 btn-primary px-4 py-2 rounded-xl text-sm font-semibold shadow-lg">
                 <x-heroicon-o-pencil-square class="w-5 h-5" />
                 <span>New article</span>
@@ -58,7 +58,7 @@
                                 <td class="px-6 py-4 text-white/60 text-sm">{{ $post['reads'] }}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center justify-end space-x-2">
-                                        <a href="{{ route('author.posts.edit', $post['id']) }}"
+                                        <a href="{{ route('author.blogs.edit', $post['id']) }}"
                                             class="btn-glass px-3 py-2 rounded-xl text-xs text-white/80 hover:text-white transition">Edit</a>
                                         <button type="button"
                                             class="btn-glass px-3 py-2 rounded-xl text-xs text-red-300 hover:text-red-200 transition">Delete</button>
