@@ -26,6 +26,7 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::prefix('author')->name('author.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/blogs', [DashboardController::class, 'blogs'])->name('blogs.index');
+    Route::get('/blogs/view/{slug}', [DashboardController::class, 'view'])->name('blogs.view');
     Route::get('/blogs/create', [DashboardController::class, 'createBlog'])->name('blogs.create');
     Route::post('/blogs', [DashboardController::class, 'storeBlog'])->name('blogs.store');
     Route::get('/blogs/{id}/edit', [DashboardController::class, 'editBlog'])->name('blogs.edit');

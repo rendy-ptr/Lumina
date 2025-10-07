@@ -20,7 +20,6 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $publicProfileUrl = $user ? route('blog.byAuthor', $user->id) : route('blog.index');
 
         $articleActions = AuthorDashboardData::articleActions($user);
 
@@ -37,18 +36,51 @@ class DashboardController extends Controller
             'articleActions' => $articleActions,
             'published' => $published,
             'profileLinks' => $profileLinks,
-            'publicProfileUrl' => $publicProfileUrl,
         ]);
     }
+
+    public function view($slug)
+    {
+        $user = Auth::user();
+
+        $blog = Blog::with([
+            'user.authorProfile',
+            'user.visitorProfile',
+            'category',
+            'comments.user'
+        ])
+            ->where('slug', $slug)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        return view('author.blogs.view', [
+            'user' => $user,
+            'blog' => $blog,
+        ]);
+    }
+
 
     public function blogs()
     {
         $user = Auth::user();
-        $posts = $this->samplePosts();
+
+        $published = Blog::with('category')
+            ->where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $articleCount = $published->count();
+        $totalViews = $published->sum('views');
+        $totalLikes = $published->sum('likes_count');
+        $totalComments = $published->sum('comments_count');
 
         return view('author.blogs.index', [
             'user' => $user,
-            'posts' => $posts,
+            'published' => $published,
+            'articleCount' => $articleCount,
+            'totalViews' => $totalViews,
+            'totalLikes' => $totalLikes,
+            'totalComments' => $totalComments,
         ]);
     }
 

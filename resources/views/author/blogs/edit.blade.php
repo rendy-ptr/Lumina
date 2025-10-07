@@ -1,4 +1,4 @@
-<x-layouts.author-layout :title="'Edit: ' . ($post['title'] ?? 'Article')">
+<x-layouts.author-layout :title="'Edit: ' . ($post['title'])">
     <section class="space-y-8">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
