@@ -6,6 +6,8 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 
 class BlogController extends Controller
@@ -32,7 +34,7 @@ class BlogController extends Controller
     }
 
 
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         $query = Blog::with([
             'user.authorProfile',
@@ -43,7 +45,11 @@ class BlogController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $query->increment('views');
+        $viewerCacheKey = sprintf('blog:%d:view:%s', $query->id, $request->ip());
+
+        if (Cache::add($viewerCacheKey, true, now()->addDay())) {
+            $query->increment('views');
+        }
 
         $relatedBlogs = Blog::with(['user.authorProfile', 'category'])
             ->where('user_id', $query->user_id)
@@ -53,9 +59,28 @@ class BlogController extends Controller
 
 
 
+        $isFollowingAuthor = false;
+        $hasLikedArticle = false;
+
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            $isFollowingAuthor = $user
+                ->followingAuthors()
+                ->where('users.id', $query->user_id)
+                ->exists();
+
+            $hasLikedArticle = $user
+                ->likedBlogs()
+                ->where('blogs.id', $query->id)
+                ->exists();
+        }
+
         return view('blog.detail', [
             'blog' => $query,
-            'relatedBlogs' => $relatedBlogs
+            'relatedBlogs' => $relatedBlogs,
+            'isFollowingAuthor' => $isFollowingAuthor,
+            'isLiked' => $hasLikedArticle,
         ]);
     }
 

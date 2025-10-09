@@ -89,11 +89,13 @@ class DashboardController extends Controller
         $user = Auth::user();
         abort_if(is_null($user), 403);
 
+        $profileStatus = $this->resolveAuthorProfileStatus($user);
         $categories = Category::query()->orderBy('name')->get(['id', 'name']);
 
         return view('author.blogs.create', [
             'user' => $user,
             'categories' => $categories,
+            'profileStatus' => $profileStatus,
         ]);
     }
 
@@ -101,6 +103,14 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         abort_if(is_null($user), 403);
+
+        $profileStatus = $this->resolveAuthorProfileStatus($user);
+
+        if (! $profileStatus['is_complete']) {
+            return redirect()
+                ->route('author.blogs.create')
+                ->with('profile_incomplete', $profileStatus['missing_fields']);
+        }
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -138,7 +148,7 @@ class DashboardController extends Controller
 
         if (! $cloudName || ! $apiKey || ! $apiSecret) {
             throw ValidationException::withMessages([
-                'thumbnail' => __('Image upload service is not configured.'),
+                'thumbnail' => 'Image upload service is not configured.',
             ]);
         }
 
@@ -170,7 +180,7 @@ class DashboardController extends Controller
 
         if ($response->failed()) {
             throw ValidationException::withMessages([
-                'thumbnail' => __('Failed to upload image. Please try again later.'),
+                'thumbnail' => 'Failed to upload image. Please try again later.',
             ]);
         }
 
@@ -179,14 +189,14 @@ class DashboardController extends Controller
 
         if (! $thumbnailUrl) {
             throw ValidationException::withMessages([
-                'thumbnail' => __('Image upload did not return a valid URL.'),
+                'thumbnail' => 'Image upload did not return a valid URL.',
             ]);
         }
 
         return $thumbnailUrl;
     }
 
-    private function resolveUniqueSlug(?string $slug, string $title): string
+    private function resolveUniqueSlug(?string $slug, string $title, ?int $ignoreId = null): string
     {
         $baseSlug = Str::slug($slug ?: $title);
 
@@ -197,7 +207,11 @@ class DashboardController extends Controller
         $uniqueSlug = $baseSlug;
         $suffix = 1;
 
-        while (Blog::where('slug', $uniqueSlug)->exists()) {
+        while (
+            Blog::where('slug', $uniqueSlug)
+                ->when($ignoreId, fn ($query) => $query->where('id', '!=', $ignoreId))
+                ->exists()
+        ) {
             $uniqueSlug = "{$baseSlug}-{$suffix}";
             $suffix++;
         }
@@ -205,52 +219,119 @@ class DashboardController extends Controller
         return $uniqueSlug;
     }
 
+    public function updateBlog(Request $request, int $id)
+    {
+        $user = Auth::user();
+        abort_if(is_null($user), 403);
+
+        $blog = Blog::where('id', $id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        $validated = $request->validate([
+            'title' => ['sometimes', 'required', 'string', 'max:255'],
+            'slug' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'category_id' => ['sometimes', 'required', 'exists:categories,id'],
+            'excerpt' => ['sometimes', 'required', 'string'],
+            'thumbnail' => ['sometimes', 'image', 'max:2048'],
+            'content' => ['sometimes', 'required', 'string'],
+        ]);
+
+        $updates = [];
+
+        if (array_key_exists('title', $validated)) {
+            $updates['title'] = $validated['title'];
+        }
+
+        if (array_key_exists('category_id', $validated)) {
+            $updates['category_id'] = $validated['category_id'];
+        }
+
+        if (array_key_exists('excerpt', $validated)) {
+            $updates['excerpt'] = $validated['excerpt'];
+        }
+
+        if (array_key_exists('content', $validated)) {
+            $updates['content'] = $validated['content'];
+        }
+
+        if (array_key_exists('slug', $validated)) {
+            $resolvedSlug = $this->resolveUniqueSlug($validated['slug'], $validated['title'] ?? $blog->title, $blog->id);
+            $updates['slug'] = $resolvedSlug;
+        }
+
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailUrl = $this->uploadThumbnailToCloudinary($request->file('thumbnail'), (int) $user->id);
+            $updates['thumbnail_url'] = $thumbnailUrl;
+        }
+
+        if (! empty($updates)) {
+            $blog->update($updates);
+        }
+
+        return redirect()
+            ->route('author.blogs.edit', $blog->id)
+            ->with('status', 'Article updated successfully.');
+    }
+
+    public function destroyBlog(int $id)
+    {
+        $user = Auth::user();
+        abort_if(is_null($user), 403);
+
+        $blog = Blog::where('id', $id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        $blogTitle = $blog->title;
+        $blog->delete();
+
+        return redirect()
+            ->route('author.blogs.index')
+            ->with('status', 'Article "' . $blogTitle . '" deleted successfully.');
+    }
+
     public function editBlog(int $id)
     {
         $user = Auth::user();
-        $post = $this->samplePosts()->firstWhere('id', $id);
+        abort_if(is_null($user), 403);
 
-        abort_if(is_null($post), 404);
+        $blog = Blog::with('category')
+            ->where('id', $id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        $categories = Category::query()
+            ->orderBy('name')
+            ->get(['id', 'name']);
 
         return view('author.blogs.edit', [
             'user' => $user,
-            'post' => $post,
+            'blog' => $blog,
+            'categories' => $categories,
         ]);
     }
 
-    private function samplePosts(): Collection
+    private function resolveAuthorProfileStatus($user): array
     {
-        return collect([
-            [
-                'id' => 1,
-                'title' => 'Designing for Calm Interfaces',
-                'status' => 'draft',
-                'updated_at' => Carbon::now()->subDays(1),
-                'reads' => '�',
-                'summary' => 'Exploring UI systems that reduce cognitive noise and encourage focus.',
-                'content' => 'Designing calm interfaces starts with intention. Consider how spacing, typography, and rhythm help the reader breathe...'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Habits for Intentional Productivity',
-                'status' => 'scheduled',
-                'updated_at' => Carbon::now()->subDays(3),
-                'reads' => '�',
-                'summary' => 'A practical look at balancing creative energy with recovery.',
-                'content' => 'Intentional productivity isn\'t about hustle; it\'s about aligning tasks with available energy...'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Finding Focus in a Noisy World',
-                'status' => 'published',
-                'updated_at' => Carbon::now()->subWeek(),
-                'reads' => '2.4k reads',
-                'summary' => 'Shaping rituals and environments that protect deep work.',
-                'content' => 'Focus is the byproduct of protecting attention. Begin with shrinking notifications and crafting micro-rituals...'
-            ],
-        ])->map(function ($post) {
-            $post['updated_human'] = $post['updated_at']->diffForHumans();
-            return $post;
-        });
+        $profile = $user->authorProfile;
+
+        $requiredFields = collect([
+            'Display name' => $user->name,
+            'Bio' => $profile?->bio,
+            'Job title' => $profile?->job_title,
+            'Signature quote' => $profile?->quote,
+        ]);
+
+        $missingFields = $requiredFields
+            ->filter(fn ($value) => blank($value))
+            ->keys()
+            ->values()
+            ->all();
+
+        return [
+            'is_complete' => empty($missingFields),
+            'missing_fields' => $missingFields,
+        ];
     }
 }

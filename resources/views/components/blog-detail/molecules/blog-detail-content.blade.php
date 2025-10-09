@@ -1,4 +1,7 @@
 <div class="px-8 pb-8">
+    @php
+        $userHasLiked = $isLiked ?? false;
+    @endphp
     <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
         {{ $blog->title }}
     </h1>
@@ -21,12 +24,33 @@
 
         <div class="flex items-center space-x-3">
             <!-- Like Button -->
-            <button
-                class="like-btn flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
-                data-post-id="{{ $blog->id }}" data-liked="false">
-                <x-heroicon-o-heart class="w-5 h-5 text-white/50 group-hover:text-red-400" />
-                <span class="like-count text-white/70">{{ $blog->likes_count }}</span>
-            </button>
+            @guest
+                <a href="{{ route('login') }}"
+                    class="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-white/70">
+                    <x-heroicon-o-heart class="w-5 h-5 text-white/50 group-hover:text-red-400" />
+                    <span> Login To Like Article </span>
+                </a>
+            @else
+                <form action="{{ route('blogs.likes', $blog->id) }}" method="POST"
+                    class="js-like-form flex items-center">
+                    @csrf
+                    <input type="hidden" name="action" value="{{ $userHasLiked ? 'unlike' : 'like' }}">
+                    <button type="submit"
+                        @class([
+                            'like-btn js-like-button group flex items-center space-x-2 px-4 py-2 rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-rose-400/40',
+                            'bg-white/5 text-white/70 hover:bg-white/10 border-white/10' => ! $userHasLiked,
+                            'bg-rose-500/20 text-rose-100 border-rose-400/40 hover:bg-rose-500/30' => $userHasLiked,
+                        ])
+                        data-post-id="{{ $blog->id }}" data-liked="{{ $userHasLiked ? 'true' : 'false' }}"
+                        aria-pressed="{{ $userHasLiked ? 'true' : 'false' }}">
+                        <x-heroicon-o-heart
+                            class="js-like-icon-outline w-5 h-5 transition-colors {{ $userHasLiked ? 'hidden' : 'text-white/50 group-hover:text-rose-300' }}" />
+                        <x-heroicon-s-heart
+                            class="js-like-icon-solid w-5 h-5 text-rose-300 {{ $userHasLiked ? '' : 'hidden' }}" />
+                        <span class="like-count js-like-count">{{ $blog->likes_count }}</span>
+                    </button>
+                </form>
+            @endguest
 
             {{-- View Button --}}
             <div

@@ -29,8 +29,41 @@
             </div>
         @endif
 
+        @php
+            $profileStatus = ($profileStatus ?? ['is_complete' => true, 'missing_fields' => []]);
+            $sessionProfileWarning = session('profile_incomplete');
+
+            if (is_array($sessionProfileWarning) && ! empty($sessionProfileWarning)) {
+                $profileStatus['missing_fields'] = $sessionProfileWarning;
+                $profileStatus['is_complete'] = false;
+            }
+        @endphp
+
+        @if (! $profileStatus['is_complete'])
+            <div id="profile-incomplete-banner"
+                class="rounded-2xl border border-amber-400/40 bg-amber-500/10 px-5 py-4 text-sm text-amber-100 space-y-2">
+                <div class="flex items-start gap-3">
+                    <x-heroicon-o-exclamation-triangle class="h-5 w-5 shrink-0 text-amber-200" />
+                    <div class="space-y-2">
+                        <p class="font-semibold text-amber-50">Lengkapi profil kamu sebelum mempublikasikan artikel.</p>
+                        <p class="text-amber-100/80">
+                            Data berikut masih kosong:
+                            <span class="font-medium">
+                                {{ implode(', ', $profileStatus['missing_fields']) }}
+                            </span>.
+                        </p>
+                        <a href="{{ route('author.profile.edit') }}"
+                            class="inline-flex items-center gap-2 rounded-xl border border-amber-300/40 bg-amber-200/10 px-3 py-2 text-xs font-medium text-amber-50 transition hover:bg-amber-200/20">
+                            <x-heroicon-o-user-circle class="h-4 w-4" />
+                            Lengkapi profile sekarang
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            <form action="{{ route('author.blogs.store') }}" method="POST" enctype="multipart/form-data"
+            <form id="create-blog-form" action="{{ route('author.blogs.store') }}" method="POST" enctype="multipart/form-data"
                 class="glass-strong xl:col-span-2 space-y-6 rounded-3xl border border-white/10 px-6 py-6">
                 @csrf
 
@@ -133,8 +166,9 @@
                     <div class="text-xs text-white/50">
                         Need a pause? You can come back to this form anytime from the Articles page.
                     </div>
-                    <button type="submit"
-                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 via-violet-500 to-indigo-500 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-300">
+                    <button type="submit" id="publish-article-button"
+                        data-profile-complete="{{ $profileStatus['is_complete'] ? 'true' : 'false' }}"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 via-violet-500 to-indigo-500 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-300{{ $profileStatus['is_complete'] ? '' : ' opacity-60 cursor-not-allowed' }}">
                         <x-heroicon-o-paper-airplane class="h-4 w-4" />
                         Publish article
                     </button>
@@ -187,37 +221,54 @@
             const titleInput = document.getElementById('title');
             const slugInput = document.getElementById('slug');
             const refreshButton = document.getElementById('slug-refresh');
+            const createBlogForm = document.getElementById('create-blog-form');
+            const publishButton = document.getElementById('publish-article-button');
+            const profileStatus = @json($profileStatus);
 
-            if (!titleInput || !slugInput) {
-                return;
+            if (publishButton && profileStatus && profileStatus.is_complete === false) {
+                publishButton.setAttribute('aria-disabled', 'true');
             }
 
-            const slugify = (value) =>
-                value
-                .toString()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/(^-|-$)/g, '')
-                .replace(/-{2,}/g, '-');
+            if (createBlogForm && profileStatus && profileStatus.is_complete === false) {
+                createBlogForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    const missingFields = Array.isArray(profileStatus.missing_fields) ? profileStatus.missing_fields.join(', ') : '';
+                    const warningText = missingFields
+                        ? `Lengkapi profil kamu terlebih dahulu sebelum mempublikasikan artikel. Data yang belum lengkap: ${missingFields}.`
+                        : 'Lengkapi profil kamu terlebih dahulu sebelum mempublikasikan artikel.';
+                    window.alert(warningText);
+                });
+            }
 
-            const updateSlug = () => {
-                if (slugInput.dataset.userEdited === 'true') {
-                    return;
-                }
-                slugInput.value = slugify(titleInput.value);
-            };
+            if (titleInput && slugInput) {
+                const slugify = (value) =>
+                    value
+                    .toString()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/(^-|-$)/g, '')
+                    .replace(/-{2,}/g, '-');
 
-            titleInput.addEventListener('input', updateSlug);
-            slugInput.addEventListener('input', () => {
-                slugInput.dataset.userEdited = 'true';
-            });
-            refreshButton?.addEventListener('click', (event) => {
-                event.preventDefault();
-                slugInput.dataset.userEdited = 'false';
-                slugInput.value = slugify(titleInput.value);
-            });
+                const updateSlug = () => {
+                    if (slugInput.dataset.userEdited === 'true') {
+                        return;
+                    }
+                    slugInput.value = slugify(titleInput.value);
+                };
+
+                titleInput.addEventListener('input', updateSlug);
+                slugInput.addEventListener('input', () => {
+                    slugInput.dataset.userEdited = 'true';
+                });
+                refreshButton?.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    slugInput.dataset.userEdited = 'false';
+                    slugInput.value = slugify(titleInput.value);
+                });
+                updateSlug();
+            }
 
             const thumbnailInput = document.getElementById('thumbnail');
             const thumbnailLabel = document.getElementById('thumbnail-filename');
@@ -234,8 +285,6 @@
                     }
                 });
             }
-
-            updateSlug();
         });
     </script>
 </x-layouts.author-layout>

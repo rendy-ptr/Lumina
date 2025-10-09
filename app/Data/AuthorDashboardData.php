@@ -56,9 +56,9 @@ class AuthorDashboardData
                 'route' => route('author.setting.edit'),
             ],
             [
-                'label' => 'Support & resources',
-                'icon' => 'heroicon-o-lifebuoy',
-                'route' => '#',
+                'label' => 'Home Page',
+                'icon' => 'heroicon-o-home',
+                'route' => route('home'),
             ],
         ]);
     }

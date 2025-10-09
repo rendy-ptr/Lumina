@@ -36,23 +36,18 @@ class User extends Authenticatable
         return $this->hasOne(AuthorProfile::class);
     }
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'author_followers', 'author_id', 'follower_id')->withTimestamps();
+    }
 
-    //     static::created(function ($user) {
-    //         if ($user->role === 'visitor') {
-    //             $user->visitorProfile()->create([
-    //                 'avatar_url' => 'https://ui-avatars.com/api/?name=' . urlencode($user->name)
-    //             ]);
-    //         } elseif ($user->role === 'author') {
-    //             $user->authorProfile()->create([
-    //                 'avatar_url' => 'https://ui-avatars.com/api/?name=' . urlencode($user->name),
-    //                 'linkedin_url' => 'https://linkedin.com/in/' . fake()->userName(),
-    //                 'bio' => fake()->paragraph(3),
-    //                 'follower' => 0,
-    //             ]);
-    //         }
-    //     });
-    // }
+    public function followingAuthors()
+    {
+        return $this->belongsToMany(User::class, 'author_followers', 'follower_id', 'author_id')->withTimestamps();
+    }
+
+    public function likedBlogs()
+    {
+        return $this->belongsToMany(Blog::class, 'blog_likes', 'user_id', 'blog_id')->withTimestamps();
+    }
 }

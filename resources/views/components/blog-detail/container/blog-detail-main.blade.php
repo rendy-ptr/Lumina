@@ -6,10 +6,10 @@
 
             <div class="flex flex-col lg:flex-row gap-8">
                 <!-- Article Header -->
-                <x-blog-detail.organisms.blog-detail-article :blog="$blog" />
+                <x-blog-detail.organisms.blog-detail-article :blog="$blog" :is-liked="$isLiked ?? false" />
 
                 <!-- Sidebar - 1/3 width -->
-                <x-blog-detail.organisms.blog-detail-sidebar :blog="$blog" />
+                <x-blog-detail.organisms.blog-detail-sidebar :blog="$blog" :is-following-author="$isFollowingAuthor" />
             </div>
 
             <!-- Related Posts (Full Width) -->

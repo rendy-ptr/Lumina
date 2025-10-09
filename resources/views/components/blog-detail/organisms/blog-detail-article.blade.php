@@ -9,6 +9,6 @@
          </div>
 
          <!-- Article Meta -->
-         <x-blog-detail.molecules.blog-detail-content :blog="$blog" />
+         <x-blog-detail.molecules.blog-detail-content :blog="$blog" :is-liked="$isLiked ?? false" />
      </article>
  </div>

@@ -96,8 +96,15 @@
                                     <div class="flex items-center justify-end gap-2">
                                         <a href="{{ route('author.blogs.edit', $blog->id) }}"
                                             class="btn-glass px-3 py-2 rounded-xl text-xs text-white/80 hover:text-white transition">Edit</a>
-                                        <button type="button"
-                                            class="btn-glass px-3 py-2 rounded-xl text-xs text-red-300 hover:text-red-200 transition">Delete</button>
+                                        <form action="{{ route('author.blogs.destroy', $blog->id) }}" method="POST"
+                                            onsubmit="return confirm('Are you sure you want to delete this article?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="btn-glass px-3 py-2 rounded-xl text-xs text-red-300 hover:text-red-200 transition">
+                                                Delete
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

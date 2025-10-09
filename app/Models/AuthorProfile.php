@@ -18,6 +18,7 @@ class AuthorProfile extends Model
         'instagram_url',
         'website_url',
         'email',
+        'follower',
     ];
     public function user()
     {
