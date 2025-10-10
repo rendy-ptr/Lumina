@@ -66,7 +66,7 @@ Gunakan opsi ini jika ingin menjalankan aplikasi tanpa menyiapkan PHP/Node/MySQL
 
 1. **Clone repositori (jika belum) dan masuk ke direktori proyek**
    ```bash
-   git clone <url-repo-anda> lumina
+   git clone https://github.com/rendy-ptr/Lumina.git
    cd lumina
    ```
 2. **Siapkan konfigurasi environment khusus Docker**
