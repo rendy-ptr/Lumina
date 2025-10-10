@@ -9,13 +9,13 @@ Lumina adalah platform blog modern berbasis Laravel 12 yang menampilkan artikel,
 - Integrasi ikon berbasis Blade dan asset bundling dengan Vite
 
 ## Teknologi
-- Laravel 12 (PHP 8.2)
+- Laravel 12 (PHP 8.3)
 - MySQL 8
 - Redis 7 (opsional)
 - Vite + Tailwind CSS & ekosistem Blade Icons
 
 ## Sistem Requirement
-- PHP >= 8.2 dengan ekstensi: `pdo_mysql`, `mbstring`, `bcmath`, `intl`, `gd`, `zip`, `redis`
+- PHP >= 8.3 dengan ekstensi: `pdo_mysql`, `mbstring`, `bcmath`, `intl`, `gd`, `zip`, `redis`
 - Composer 2.x
 - Node.js 20.x & npm (atau package manager kompatibel)
 - MySQL 8.x

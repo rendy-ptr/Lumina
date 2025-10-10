@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.6
 
-FROM php:8.2-fpm-bullseye
+FROM php:8.3-fpm-bullseye
 
 ARG NODE_VERSION=20
 
