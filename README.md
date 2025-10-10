@@ -1,5 +1,6 @@
 # Lumina
 
+<img width="2559" height="1259" alt="Screenshot 2025-10-10 173726" src="https://github.com/user-attachments/assets/5a526f33-0327-4d33-a0c5-5e550cb5ca6f" />
 Lumina adalah platform blog modern berbasis Laravel 12 yang menampilkan artikel, sistem komentar, likes, dan fitur interaksi penulis–pembaca. Proyek ini mengutamakan kemudahan pengembangan dengan dukungan asset build via Vite serta opsi menjalankan aplikasi secara lokal ataupun melalui Docker.
 
 ## Fitur Utama
