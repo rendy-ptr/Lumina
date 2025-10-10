@@ -35,18 +35,6 @@
                         </span>
                     </div>
                 </div>
-                <div class="flex items-center space-x-3 mt-2">
-                    <button
-                        class="text-white/50 hover:text-purple-400 text-xs flex items-center space-x-1 transition-colors">
-                        <x-heroicon-o-arrow-up-tray class="w-3 h-3" />
-                        <span>Reply</span>
-                    </button>
-                    <button
-                        class="text-white/50 hover:text-red-400 text-xs flex items-center space-x-1 transition-colors">
-                        <x-heroicon-o-heart class="w-3 h-3" />
-                        <span>{{ $comment->likes_count }}</span>
-                    </button>
-                </div>
             </div>
         </div>
     @empty

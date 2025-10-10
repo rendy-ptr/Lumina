@@ -12,6 +12,7 @@ use App\Http\Controllers\Author\DashboardController;
 use App\Http\Controllers\Author\AuthorProfileController;
 use App\Http\Controllers\Author\AuthorSettingController;
 use App\Http\Controllers\BlogLikeController;
+use App\Http\Controllers\Visitor\VisitorSettingController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLogin')->name('login');
@@ -24,6 +25,12 @@ Route::controller(AuthController::class)->group(function () {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+Route::prefix('visitor')->name('visitor.')->group(function () {
+    Route::get('/setting/edit', [VisitorSettingController::class, 'edit'])->name('setting.edit');
+    Route::get('/setting', [VisitorSettingController::class, 'index'])->name('setting.index');
+    Route::post('/setting/update', [VisitorSettingController::class, 'update'])->name('setting.update');
+});
 
 Route::prefix('author')->name('author.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -46,7 +53,9 @@ Route::prefix('author')->name('author.')->group(function () {
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
-Route::post('/blog/{slug}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/blog/{slug}/comments', [CommentController::class, 'store'])
+    ->middleware('auth')
+    ->name('comments.store');
 Route::get('/blog/author/{user}', [BlogController::class, 'byAuthor'])->name('blog.byAuthor');
 Route::post('/blogs/{blog}/likes', BlogLikeController::class)
     ->middleware('auth')

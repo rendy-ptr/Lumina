@@ -45,11 +45,6 @@
                 </div>
 
                 <div class="flex items-center space-x-3">
-                    <a href="#"
-                        class="hidden sm:inline-flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-medium text-white/70 hover:text-white hover:bg-white/10 transition">
-                        <x-heroicon-o-sparkles class="w-4 h-4" />
-                        <span>Creator resources</span>
-                    </a>
                     <div class="flex items-center space-x-3 bg-white/5 border border-white/10 rounded-2xl px-3 py-2">
                         <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
                             class="w-9 h-9 rounded-xl object-cover">

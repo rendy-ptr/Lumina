@@ -25,7 +25,7 @@
                 </div>
                 <div class="py-2 space-y-1">
                     @if ($user->role === 'visitor')
-                        <a href="#"
+                        <a href="{{ route('visitor.setting.edit') }}"
                             class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group/item">
                             <x-heroicon-o-cog-6-tooth class="w-5 h-5 text-gray-400 group-hover/item:text-white" />
                             <span class="text-sm text-gray-300 group-hover/item:text-white">Manage Account</span>
@@ -35,11 +35,6 @@
                             class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group/item">
                             <x-heroicon-o-squares-2x2 class="w-5 h-5 text-gray-400 group-hover/item:text-white" />
                             <span class="text-sm text-gray-300 group-hover/item:text-white">Dashboard</span>
-                        </a>
-                        <a href="{{ route('author.profile.edit') }}"
-                            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group/item">
-                            <x-heroicon-o-user-circle class="w-5 h-5 text-gray-400 group-hover/item:text-white" />
-                            <span class="text-sm text-gray-300 group-hover/item:text-white">Profile Settings</span>
                         </a>
                     @endif
                     <hr class="my-2 border-white/10">
