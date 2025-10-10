@@ -5,6 +5,10 @@ cd /var/www/html
 
 git config --global --add safe.directory /var/www/html >/dev/null 2>&1 || true
 
+if [ ! -f .env ] && [ -f .env.docker ]; then
+    cp .env.docker .env
+fi
+
 if [ ! -f vendor/autoload.php ]; then
     composer install --prefer-dist --no-progress --no-interaction
 fi

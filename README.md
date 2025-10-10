@@ -67,13 +67,13 @@ Gunakan opsi ini jika ingin menjalankan aplikasi tanpa menyiapkan PHP/Node/MySQL
 1. **Clone repositori (jika belum) dan masuk ke direktori proyek**
    ```bash
    git clone https://github.com/rendy-ptr/Lumina.git
-   cd lumina
+   cd Lumina
    ```
 2. **Siapkan konfigurasi environment khusus Docker**
    ```bash
    cp .env.docker.example .env.docker
    ```
-   Perbarui kredensial yang diperlukan (mis. Cloudinary, secret key lain). File `.env` tidak dipakai oleh Docker kecuali Anda memetakan sendiri; semua variabel diambil dari `.env.docker`.
+   Perbarui kredensial yang diperlukan (mis. Cloudinary, secret key lain). Saat container `app` pertama kali berjalan, `.env.docker` akan otomatis disalin ke `.env`.
 3. **Build serta jalankan container**
    ```bash
    docker compose up -d --build
@@ -82,25 +82,25 @@ Gunakan opsi ini jika ingin menjalankan aplikasi tanpa menyiapkan PHP/Node/MySQL
    ```bash
    docker compose logs -f app
    ```
-4. **Pasang dependency front-end**
-   ```bash
-   docker compose exec app npm install
-   ```
-5. **Proses asset sesuai kebutuhan**
-   - Build sekali jalan (mode produksi):
-     ```bash
-     docker compose exec app npm run build
-     ```
-   - Mode pengembangan dengan hot reload:
-     ```bash
-     docker compose exec app npm run dev -- --host
-     ```
-6. **Lengkapi inisialisasi Laravel**
+4. **Inisialisasi Laravel sebelum pengembangan**
    ```bash
    docker compose exec app php artisan key:generate
    docker compose exec app php artisan migrate --seed
    docker compose exec app php artisan storage:link
    ```
+5. **Pasang dependency front-end**
+   ```bash
+   docker compose exec app npm install
+   ```
+6. **Proses asset dan jalankan mode pengembangan**
+   - Build sekali jalan (mode produksi):
+     ```bash
+     docker compose exec app npm run build
+     ```
+   - Mode pengembangan dengan hot reload (jalankan setelah migrasi selesai):
+     ```bash
+     docker compose exec app npm run dev -- --host
+     ```
 
 Setelah langkah di atas, aplikasi aktif di `http://localhost:8000`. MySQL tersedia pada `localhost:33060` (user/password sesuai `.env.docker`), Redis pada `localhost:63790`. Hentikan seluruh container dengan `docker compose down`, atau sertakan `-v` untuk sekalian menghapus volume (`mysql-data`, `vendor`, `node_modules`) bila ingin benar-benar bersih.
 
