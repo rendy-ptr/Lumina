@@ -62,37 +62,47 @@ Lumina adalah platform blog modern berbasis Laravel 12 yang menampilkan artikel,
    Aplikasi tersedia di `http://127.0.0.1:8000`. Jalankan `npm run dev` di terminal terpisah agar Vite memantau perubahan front-end secara live.
 
 ## Lingkungan Docker
-Gunakan opsi ini jika ingin menjalankan aplikasi tanpa menginstal PHP, Composer, Node.js, atau MySQL secara manual.
+Gunakan opsi ini jika ingin menjalankan aplikasi tanpa menyiapkan PHP/Node/MySQL secara manual.
 
-1. Salin file environment contoh dan sesuaikan:
+1. **Clone repositori (jika belum) dan masuk ke direktori proyek**
+   ```bash
+   git clone <url-repo-anda> lumina
+   cd lumina
+   ```
+2. **Siapkan konfigurasi environment khusus Docker**
    ```bash
    cp .env.docker.example .env.docker
    ```
-2. Build dan jalankan seluruh container:
+   Perbarui kredensial yang diperlukan (mis. Cloudinary, secret key lain). File `.env` tidak dipakai oleh Docker kecuali Anda memetakan sendiri; semua variabel diambil dari `.env.docker`.
+3. **Build serta jalankan container**
    ```bash
    docker compose up -d --build
    ```
-3. Dependency PHP terpasang otomatis saat container `app` pertama kali berjalan. Jika Anda mengubah `composer.json`, jalankan ulang perintah berikut:
+   Composer akan otomatis menjalankan `composer install` saat container `app` pertama kali hidup. Cek progres lewat:
    ```bash
-   docker compose exec app composer install
+   docker compose logs -f app
    ```
-4. Install dependency JavaScript dan proses asset:
+4. **Pasang dependency front-end**
    ```bash
    docker compose exec app npm install
-   docker compose exec app npm run build
    ```
-   Untuk hot reload selama pengembangan:
-   ```bash
-   docker compose exec app npm run dev -- --host
-   ```
-5. Selesaikan inisialisasi Laravel:
+5. **Proses asset sesuai kebutuhan**
+   - Build sekali jalan (mode produksi):
+     ```bash
+     docker compose exec app npm run build
+     ```
+   - Mode pengembangan dengan hot reload:
+     ```bash
+     docker compose exec app npm run dev -- --host
+     ```
+6. **Lengkapi inisialisasi Laravel**
    ```bash
    docker compose exec app php artisan key:generate
    docker compose exec app php artisan migrate --seed
    docker compose exec app php artisan storage:link
    ```
 
-Setelah seluruh langkah di atas, aplikasi siap diakses di `http://localhost:8000`. MySQL dapat dijangkau via `localhost:33060`, sedangkan Redis tersedia di `localhost:63790`. Gunakan `docker compose down` untuk mematikan seluruh container.
+Setelah langkah di atas, aplikasi aktif di `http://localhost:8000`. MySQL tersedia pada `localhost:33060` (user/password sesuai `.env.docker`), Redis pada `localhost:63790`. Hentikan seluruh container dengan `docker compose down`, atau sertakan `-v` untuk sekalian menghapus volume (`mysql-data`, `vendor`, `node_modules`) bila ingin benar-benar bersih.
 
 ## Perintah Berguna
 - `php artisan test` — menjalankan seluruh pengujian aplikasi
